@@ -86,10 +86,20 @@ function multiselect {
 
     # user key control
     case $(key_input) in
-    space) toggle_option $active ;;
+    space)
+      toggle_option $active
+      ;;
     enter)
-      print_options -1
-      break
+      quantityOfSelected=0
+      for ((i = 0; i < ${#selected[@]}; i++)); do
+        if [[ ${selected[i]} == "true" ]]; then
+          quantityOfSelected+=1
+        fi
+      done
+      if [[ $quantityOfSelected != 0 ]]; then
+        print_options -1
+        break
+      fi
       ;;
     up)
       ((active--))
@@ -104,6 +114,7 @@ function multiselect {
 
   # cursor position back to normal
   cursor_to $lastrow
+  printf "\n"
   printf "\n"
   cursor_blink_on
 
@@ -127,51 +138,51 @@ function stopWebserver {
 function pruneDocker {
   docker system prune -a -f
 }
+function advancedMode {
+  printf "\n"
+  printf "\n"
+  echo "This is the advanced mode. Please select the options you want to use."
+  printf "\n"
 
-##########################
-#                        #
-#        Settings        #
-#                        #
-##########################
-my_options=("Build webserver,Run webserver,Stop webserver,Prune docker")
-preselection=("true,true,false")
+  my_options=("Build webserver,Run webserver,Stop webserver")
+  preselection=("false,false,false,false")
+
+  # Call menu function
+  multiselect result "\${my_options}" "\${preselection}"
+}
+
+my_options=("Build webserver,Run webserver,Stop webserver,Prune docker,Advanced Mode")
+preselection=("false,false,false,false")
 
 # Print instructions
 printf "\n"
 echo "↑/↓ (arrow keys) or j/k to navigate up or down
-⎵ (Space) to toggle the selection and
-⏎ (Enter) to confirm the selections."
+⎵ (Space) to toggle the selection
+⏎ (Enter) to confirm the selections
+CTL+C to quit"
 printf "\n"
 printf "\n"
 
-# Call menu function
-multiselect result "\${my_options}"
+multiselect result "\${my_options}" "\${preselection}"
 
-##########################
-#                        #
-#        Results        #
-#                        #
-##########################
 for ((i = 0; i < ${#result[@]}; i++)); do
   if [[ ${result[i]} = "true" ]]; then
     case ${i} in
-
     0)
       buildWebserver
       ;;
-
     1)
       runWebserver
       ;;
-
     2)
       stopWebserver
       ;;
-
     3)
       pruneDocker
       ;;
+    4)
+      advancedMode
+      ;;
     esac
   fi
-  # echo "$i is ${result[i]}"
 done
