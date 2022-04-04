@@ -1,6 +1,27 @@
 #!/bin/bash
 
+# Flags
+e_flag=''
+v_flag=''
+while getopts 'e:v:' flag; do
+  case "${flag}" in
+  e) e_flag="${OPTARG}" ;;
+  v) v_flag="${OPTARG}" ;;
+  esac
+done
+
+# Print instructions
+echo "$(tput setaf 3)"
+printf "\n"
+echo "↑/↓     (arrow keys) or j/k to navigate up or down
+⎵       (Space) to toggle the selection
+⏎       (Enter) to confirm the selections
+CTL+C   (CTL+Z) to exit the script"
+echo $(tput sgr0)
+
+# This is a costomized script of https://unix.stackexchange.com/a/673436
 function multiselect {
+  printf "$(tput setaf 4)"
   # little helpers for terminal print control and key input
   ESC=$(printf "\033")
   cursor_blink_on() { printf "$ESC[?25h"; }
@@ -67,7 +88,7 @@ function multiselect {
     for option in "${options[@]}"; do
       local prefix="[ ]"
       if [[ ${selected[idx]} == true ]]; then
-        prefix="[\e[38;5;46m✔\e[0m]"
+        prefix="[$(tput setaf 2)✔$(tput setaf 4)]"
       fi
 
       cursor_to $(($startrow + $idx))
@@ -114,75 +135,90 @@ function multiselect {
 
   # cursor position back to normal
   cursor_to $lastrow
-  printf "\n"
-  printf "\n"
   cursor_blink_on
 
   eval $return_value='("${selected[@]}")'
+  printf $(tput sgr0)
 }
 
-##########################
-#                        #
-#       Functions        #
-#                        #
-##########################
+# Functions
 function buildWebserver {
-  docker build -t webserver .
+  printf "$(tput setaf 2)\n\nBuilding Webserver...$(tput sgr0)\n\n"
+  docker build -t webserver . 0>/dev/null
 }
 function runWebserver {
-  docker run -it --rm -d -p 80:80 --name webserver --mount type=bind,source="$(pwd)"/frontend/,target=/var/www/icebear.se webserver
+  printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
+  if [[ -d $v_flag || -f $v_flag ]]; then
+    docker run -it --rm -d -p 80:80 --name webserver --mount type=bind,source=$v_flag,target=/var/www/icebear.se webserver
+  elif [[ $v_flag == '' ]]; then
+    docker run -it --rm -d -p 80:80 --name webserver --mount type=bind,source="$(pwd)"/frontend/,target=/var/www/icebear.se webserver
+  else
+    printf "$(tput bold)$(tput setaf 1)Please provide a valid path to the frontend folder$(tput sgr0)\n"
+    printf "\n"
+    exit 1
+  fi
 }
 function stopWebserver {
+  printf "$(tput setaf 2)\n\nStopping Webserver...$(tput sgr0)\n\n"
   docker stop webserver
 }
 function pruneDocker {
+  printf "$(tput setaf 2)\n\nPruning Docker...$(tput sgr0)\n\n"
   docker system prune -a -f
 }
-function advancedMode {
-  printf "\n"
-  printf "\n"
-  echo "This is the advanced mode. Please select the options you want to use."
-  printf "\n"
-
-  my_options=("Build webserver,Run webserver,Stop webserver")
-  preselection=("false,false,false,false")
-
-  # Call menu function
+function devMenu {
+  my_options=("Build webserver,Run webserver,Stop webserver,Prune docker")
+  preselection=("false,false,false")
   multiselect result "\${my_options}" "\${preselection}"
+
+  for ((i = 0; i < ${#result[@]}; i++)); do
+    if [[ ${result[i]} = "true" ]]; then
+      case ${i} in
+      0)
+        buildWebserver
+        ;;
+      1)
+        runWebserver
+        ;;
+      2)
+        stopWebserver
+        ;;
+      3)
+        pruneDocker
+        ;;
+      esac
+    fi
+  done
+}
+function chooseEnv {
+  my_options=("Development,Production")
+  preselection=("false,false")
+  multiselect result "\${my_options}" "\${preselection}"
+
+  for ((i = 0; i < ${#result[@]}; i++)); do
+    if [[ ${result[i]} = "true" ]]; then
+      case ${i} in
+      0)
+        printf "$(tput bold)$(tput setaf 3)\n\nDevelopment Menu$(tput sgr0)\n\n"
+        devMenu
+        ;;
+      1)
+        printf "$(tput bold)$(tput setaf 3)\n\nProduction Menu$(tput sgr0)\n\n"
+        devMenu
+        ;;
+      esac
+    fi
+  done
 }
 
-my_options=("Build webserver,Run webserver,Stop webserver,Prune docker,Advanced Mode")
-preselection=("false,false,false,false")
-
-# Print instructions
-printf "\n"
-echo "↑/↓ (arrow keys) or j/k to navigate up or down
-⎵ (Space) to toggle the selection
-⏎ (Enter) to confirm the selections
-CTL+C to quit"
-printf "\n"
-printf "\n"
-
-multiselect result "\${my_options}" "\${preselection}"
-
-for ((i = 0; i < ${#result[@]}; i++)); do
-  if [[ ${result[i]} = "true" ]]; then
-    case ${i} in
-    0)
-      buildWebserver
-      ;;
-    1)
-      runWebserver
-      ;;
-    2)
-      stopWebserver
-      ;;
-    3)
-      pruneDocker
-      ;;
-    4)
-      advancedMode
-      ;;
-    esac
-  fi
-done
+case $e_flag in
+dev | development)
+  devMenu
+  ;;
+prod | production)
+  devMenu
+  ;;
+*)
+  chooseEnv
+  ;;
+esac
