@@ -158,6 +158,10 @@ function runWebserver {
     exit 1
   fi
 }
+function installCert {
+  printf "$(tput setaf 2)\n\nInstalling Certificate...$(tput sgr0)\n\n"
+  docker exec -ti webserver certbot --nginx --email admin@gnusson.net --agree-tos --no-eff-email --redirect -d icebear.se --dry-run
+}
 function stopWebserver {
   printf "$(tput setaf 2)\n\nStopping Webserver...$(tput sgr0)\n\n"
   docker stop webserver
@@ -167,8 +171,8 @@ function pruneDocker {
   docker system prune -a -f
 }
 function devMenu {
-  my_options=("Build webserver,Run webserver,Stop webserver,Prune docker")
-  preselection=("false,false,false")
+  my_options=("Build webserver,Run webserver,Install Certificate,Stop webserver,Prune docker")
+  preselection=("false,false,false,false")
   multiselect result "\${my_options}" "\${preselection}"
 
   for ((i = 0; i < ${#result[@]}; i++)); do
@@ -181,9 +185,12 @@ function devMenu {
         runWebserver
         ;;
       2)
-        stopWebserver
+        installCert
         ;;
       3)
+        stopWebserver
+        ;;
+      4)
         pruneDocker
         ;;
       esac
