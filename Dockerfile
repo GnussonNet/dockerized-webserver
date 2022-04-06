@@ -22,13 +22,13 @@ RUN set -ex && \
 # Install certbot.
     pip3 install certbot certbot-nginx && \
 # Remove everything that is no longer necessary.
-    # apk del \
-        # cargo \
-        # curl \
-        # libffi-dev \
-        # libressl-dev \
-        # python3-dev \
-    # && \
+    apk del \
+        cargo \
+        curl \
+        libffi-dev \
+        libressl-dev \
+        python3-dev \
+    && \
     rm -rf /root/.cache && \
     rm -rf /root/.cargo && \
 # Create new directories and set correct permissions.
