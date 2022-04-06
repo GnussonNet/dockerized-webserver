@@ -149,9 +149,9 @@ function buildWebserver {
 function runWebserver {
   printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
   if [[ -d $v_flag || -f $v_flag ]]; then
-    docker run -it --rm -d -p 80:80 --name webserver --mount type=bind,source=$v_flag,target=/var/www/icebear.se webserver
+    docker run -it --rm -d -p 80:80 -p 443:443 --name webserver --mount type=bind,source=$v_flag,target=/var/www/icebear.se webserver
   elif [[ $v_flag == '' ]]; then
-    docker run -it --rm -d -p 80:80 --name webserver --mount type=bind,source="$(pwd)"/frontend/,target=/var/www/icebear.se webserver
+    docker run -it --rm -d -p 80:80 -p 443:443 --name webserver --mount type=bind,source="$(pwd)"/frontend/,target=/var/www/icebear.se webserver
   else
     printf "$(tput bold)$(tput setaf 1)Please provide a valid path to the frontend folder$(tput sgr0)\n"
     printf "\n"
@@ -160,7 +160,7 @@ function runWebserver {
 }
 function installCert {
   printf "$(tput setaf 2)\n\nInstalling Certificate...$(tput sgr0)\n\n"
-  docker exec -ti webserver certbot --nginx --email admin@gnusson.net --agree-tos --no-eff-email --redirect -d icebear.se --dry-run
+  docker exec -ti webserver certbot --nginx --email admin@gnusson.net --agree-tos --no-eff-email --redirect -d icebear.se
 }
 function stopWebserver {
   printf "$(tput setaf 2)\n\nStopping Webserver...$(tput sgr0)\n\n"
