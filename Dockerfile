@@ -34,13 +34,12 @@ RUN set -ex && \
   rm -rf /root/.cargo && \
   # Create new directories and set correct permissions.
   mkdir -p /var/www/letsencrypt && \
-  chown 82:82 -R /var/www \
-  && \
+  chown 82:82 -R /var/www && \
+  mkdir -p /etc/nginx/sites-enabled/ && \
   # Make sure there are no surprise config files inside the config folder.
   rm -f /etc/nginx/conf.d/* && \
   rm -f /etc/nginx/nginx.conf
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY ./webserver.conf /etc/nginx/sites-available/icebear.se
-COPY ./webserver.conf /etc/nginx/sites-enabled/icebear.se
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx/webserver.conf /etc/nginx/sites-available/icebear.se
 RUN ln -sf /etc/nginx/sites-available/icebear.se /etc/nginx/sites-enabled/
