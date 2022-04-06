@@ -141,12 +141,66 @@ function multiselect {
   printf $(tput sgr0)
 }
 
-# Functions
-function buildWebserver {
+###############
+# Development #
+###############
+function devBuildWebserver {
   printf "$(tput setaf 2)\n\nBuilding Webserver...$(tput sgr0)\n\n"
   docker build -t webserver . 0>/dev/null
 }
-function runWebserver {
+function devRunWebserver {
+  printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
+  if [[ -d $v_flag || -f $v_flag ]]; then
+    docker run -it --rm -d -p 8080:80 --name webserver --mount type=bind,source=$v_flag,target=/var/www/icebear.se webserver
+  elif [[ $v_flag == '' ]]; then
+    docker run -it --rm -d -p 8080:80 --name webserver --mount type=bind,source="$(pwd)"/frontend/,target=/var/www/icebear.se webserver
+  else
+    printf "$(tput bold)$(tput setaf 1)Please provide a valid path to the frontend folder$(tput sgr0)\n"
+    printf "\n"
+    exit 1
+  fi
+}
+function devStopWebserver {
+  printf "$(tput setaf 2)\n\nStopping Webserver...$(tput sgr0)\n\n"
+  docker stop webserver
+}
+function devPruneDocker {
+  printf "$(tput setaf 2)\n\nPruning Docker...$(tput sgr0)\n\n"
+  docker system prune -a -f
+}
+function devMenu {
+  my_options=("Build webserver,Run webserver,Stop webserver,Prune docker")
+  preselection=("false,false,false")
+  multiselect result "\${my_options}" "\${preselection}"
+
+  for ((i = 0; i < ${#result[@]}; i++)); do
+    if [[ ${result[i]} = "true" ]]; then
+      case ${i} in
+      0)
+        devBuildWebserver
+        ;;
+      1)
+        devRunWebserver
+        ;;
+      2)
+        devStopWebserver
+        ;;
+      3)
+        devPruneDocker
+        ;;
+      esac
+    fi
+  done
+}
+
+##############
+# Production #
+##############
+function prodBuildWebserver {
+  printf "$(tput setaf 2)\n\nBuilding Webserver...$(tput sgr0)\n\n"
+  docker build -t webserver . 0>/dev/null
+}
+function prodRunWebserver {
   printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
   if [[ -d $v_flag || -f $v_flag ]]; then
     docker run -it --rm -d -p 80:80 -p 443:443 --name webserver --mount type=bind,source=$v_flag,target=/var/www/icebear.se webserver
@@ -158,19 +212,19 @@ function runWebserver {
     exit 1
   fi
 }
-function installCert {
+function prodInstallCert {
   printf "$(tput setaf 2)\n\nInstalling Certificate...$(tput sgr0)\n\n"
   docker exec -ti webserver certbot --nginx --email admin@gnusson.net --agree-tos --no-eff-email --redirect -d icebear.se
 }
-function stopWebserver {
+function prodStopWebserver {
   printf "$(tput setaf 2)\n\nStopping Webserver...$(tput sgr0)\n\n"
   docker stop webserver
 }
-function pruneDocker {
+function prodPruneDocker {
   printf "$(tput setaf 2)\n\nPruning Docker...$(tput sgr0)\n\n"
   docker system prune -a -f
 }
-function devMenu {
+function prodMenu {
   my_options=("Build webserver,Run webserver,Install Certificate,Stop webserver,Prune docker")
   preselection=("false,false,false,false")
   multiselect result "\${my_options}" "\${preselection}"
@@ -179,19 +233,19 @@ function devMenu {
     if [[ ${result[i]} = "true" ]]; then
       case ${i} in
       0)
-        buildWebserver
+        prodBuildWebserver
         ;;
       1)
-        runWebserver
+        prodRunWebserver
         ;;
       2)
-        installCert
+        prodInstallCert
         ;;
       3)
-        stopWebserver
+        prodStopWebserver
         ;;
       4)
-        pruneDocker
+        prodPruneDocker
         ;;
       esac
     fi
@@ -211,7 +265,7 @@ function chooseEnv {
         ;;
       1)
         printf "$(tput bold)$(tput setaf 3)\n\nProduction Menu$(tput sgr0)\n\n"
-        devMenu
+        prodMenu
         ;;
       esac
     fi
@@ -223,7 +277,7 @@ dev | development)
   devMenu
   ;;
 prod | production)
-  devMenu
+  prodMenu
   ;;
 *)
   chooseEnv
