@@ -1,4 +1,5 @@
 FROM nginx:1.21.6-alpine
+# Thanks to Jonas Alfredsson for the certbot installation (modified) https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine
 
 RUN set -ex && \
 # Install packages necessary during the build phase (for all architectures).
