@@ -160,14 +160,35 @@ function devBuildWebserver {
 }
 function devRunWebserver {
   printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
-  if [[ -d $v_flag || -f $v_flag ]]; then
-    docker run -it --rm -d -p 8080:80 --name webserver --mount type=bind,source=$v_flag,target=/var/www/icebear.se webserver
-  elif [[ $v_flag == '' ]]; then
-    docker run -it --rm -d -p 8080:80 --name webserver --mount type=bind,source="$(pwd)"/frontend/,target=/var/www/icebear.se webserver
+  if [ $( docker ps -a -f name=webserver | wc -l ) -lt 2 ]; then
+    if [[ -d $v_flag || -f $v_flag ]]; then
+      docker run -it --rm -d -p 8080:80 --name webserver --mount type=bind,source=$v_flag,target=/var/www/icebear.se webserver
+    elif [[ $v_flag == '' ]]; then
+      while true; do
+        printf "$(tput setaf 3)Enter path to frontend\n$(tput setaf 4)Leave blank for CWD ($(pwd)/frontend/)? $(tput sgr0)"
+        read path
+        printf "\n"
+        case $path in
+        "")
+          docker run -it --rm -d -p 8080:80 --name webserver --mount type=bind,source="$(pwd)"/frontend/,target=/var/www/icebear.se webserver
+          break
+          ;;
+        *)
+          if [[ -d $path || -f $path ]]; then
+            docker run -it --rm -d -p 8080:80 --name webserver --mount type=bind,source=$path/frontend/,target=/var/www/icebear.se webserver
+            break
+          else
+            printf "$(tput bold)$(tput setaf 1)Please provide a valid path to the frontend folder$(tput sgr0)\n\n"
+          fi
+          ;;
+        esac
+      done
+    else
+      printf "$(tput bold)$(tput setaf 1)Please provide a valid path to the frontend folder$(tput sgr0)\n\n"
+      exit 1
+    fi
   else
-    printf "$(tput bold)$(tput setaf 1)Please provide a valid path to the frontend folder$(tput sgr0)\n"
-    printf "\n"
-    exit 1
+    echo "$(tput bold)$(tput setaf 1)Webserver already running$(tput sgr0)"
   fi
 }
 function devStopWebserver {
