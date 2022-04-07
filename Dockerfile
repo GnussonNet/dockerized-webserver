@@ -41,5 +41,3 @@ RUN set -ex && \
   rm -f /etc/nginx/nginx.conf
 
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./nginx/webserver.conf /etc/nginx/sites-available/icebear.se
-RUN ln -sf /etc/nginx/sites-available/icebear.se /etc/nginx/sites-enabled/
