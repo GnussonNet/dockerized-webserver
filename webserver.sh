@@ -37,7 +37,7 @@ function multiselect {
   local return_value=$1
   eval my_options="$2"
   eval preselection="$3"
-  local isMultiSelect=$4
+  local singleChoice=$4
 
   IFS=',' read -r -a options <<<"$my_options"
   IFS=',' read -r -a defaults <<<"$preselection"
@@ -77,7 +77,7 @@ function multiselect {
   toggle_option() {
     local option=$1
 
-    if [[ $isMultiSelect == "true" ]]; then
+    if [[ $singleChoice == "true" ]]; then
       for ((i = 0; i < ${#selected[@]}; i++)); do
         if [[ ${selected[i]} == "true" ]]; then
           selected[i]="false"
