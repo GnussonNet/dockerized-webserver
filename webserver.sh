@@ -1,20 +1,22 @@
 #!/bin/bash
 
 # Flags
-e_flag=''
+m_flag=''
 v_flag=''
 d_flag=''
 f_flag=''
 c_flag=''
 p_flag=''
-while getopts 'e:v:f:c:d:p:' flag; do
+e_flag=''
+while getopts 'm:v:f:c:d:p:e:' flag; do
   case "${flag}" in
-  e) e_flag="${OPTARG}" ;;
+  m) m_flag="${OPTARG}" ;;
   v) v_flag="${OPTARG}" ;;
   d) d_flag="${OPTARG}" ;;
   f) f_flag="${OPTARG}" ;;
   c) c_flag="${OPTARG}" ;;
   p) p_flag="${OPTARG}" ;;
+  e) e_flag="${OPTARG}" ;;
   esac
 done
 
@@ -315,7 +317,6 @@ function prodRunWebserver {
   local frontendPath=$f_flag
   local configPath=$c_flag
   local domain=$d_flag
-  local port=$p_flag
 
   # Display error message if webserver is already running
   if [ $(docker ps -a -f name=webserver | wc -l) -gt 1 ]; then
@@ -324,7 +325,7 @@ function prodRunWebserver {
   fi
 
   while true; do
-    # If domain is not set, ask the user for the path
+    # If domain is not set, ask the user for it
     if [ -z "$domain" ]; then
       read -e -p "$(tput setaf 4)What is your domain: $(tput sgr0)" domain
       printf "\n"
@@ -344,13 +345,6 @@ function prodRunWebserver {
       printf "\n"
     fi
 
-    # If port is not set, ask the user for the path
-    if [ -z "$port" ]; then
-      echo "$(tput setaf 3)What port should the webserver listen on?"
-      read -e -p "$(tput setaf 4)Leave blank for port 8080: $(tput sgr0)" port
-      printf "\n"
-    fi
-
 
     # Check agian if frontendPath is not set, if so set it to the CWD
     if [ -z "$frontendPath" ]; then
@@ -360,11 +354,6 @@ function prodRunWebserver {
     # Check agian if configPath is not set, if so set it to the CWD
     if [ -z "$configPath" ]; then
       configPath=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"/nginx/webserver.conf"
-    fi
-
-    # Check agian if port is not set, if so set it to the default
-    if [ -z "$port" ]; then
-      port=8080
     fi
 
 
@@ -389,45 +378,53 @@ function prodRunWebserver {
       continue
     fi
 
-    # If port is not a file, ask the user for the path again
-    if ! [[ $port =~ ^[0-9]+$ && $port -lt 10000  ]]; then
-      printf "$(tput bold)$(tput setaf 1)$port is not a valid port$(tput sgr0)\n\n"
-      unset port
-      continue
-    fi
-
-    # If domain is valid, frontendPath is a directory, configPath is a file and port is valid, break the loop
+    # If domain is valid, frontendPath is a directory and configPath is a file, break the loop
     break
   done
 
-  # If domain is valid, frontendPath is a directory, configPath is a file and port is valid, break the loop
-  docker run -it --rm -d -p ${port}:80 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} webserver
+  # If domain is valid, frontendPath is a directory, configPath is a file, break the loop
+  docker run -it --rm -d -p 80:80 -p 443:443 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} webserver
 }
 function prodInstallCert {
   printf "$(tput setaf 2)\n\nInstalling Certificate...$(tput sgr0)\n\n"
 
   local domain=$d_flag
+  local email=$e_flag
 
   while true; do
-    # If domain is not set, ask the user for the path
+    # If domain is not set, ask the user for it
     if [ -z "$domain" ]; then
       read -e -p "$(tput setaf 4)What is your domain: $(tput sgr0)" domain
       printf "\n"
     fi
 
-    # If domain is not a file, ask the user for the path again
+    # If email is not set, ask the user for the it
+    if [ -z "$email" ]; then
+      read -e -p "$(tput setaf 4)What is your email: $(tput sgr0)" email
+      printf "\n"
+    fi
+
+
+    # If domain is not valid, ask the user for it
     if [ -z "$domain" ]; then
       printf "$(tput bold)$(tput setaf 1)$domain is not a valid domain$(tput sgr0)\n\n"
       unset domain
       continue
     fi
 
-    #If domain is valid, break the loop
+    # If email is not valid, ask the user for it
+    if [[ ! "$email" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$ ]]; then
+      printf "$(tput bold)$(tput setaf 1)$email is not a valid email$(tput sgr0)\n\n"
+      unset email
+      continue
+    fi
+
+    # If domain is valid and email is valid, break the loop
     break
   done
 
-  # If domain is valid, break the loop
-  docker exec -ti webserver certbot --nginx --email admin@gnusson.net --agree-tos --no-eff-email --redirect -d ${domain}
+  # If domain is valid and email is valid, break the loop
+  docker exec -ti webserver certbot --nginx --email ${email} --agree-tos --no-eff-email --redirect -d ${domain}
 }
 function prodReloadWebserver {
   printf "$(tput setaf 2)\n\nReloading Webserver...$(tput sgr0)\n\n"
@@ -492,7 +489,7 @@ function chooseEnv {
   done
 }
 
-case $e_flag in
+case $m_flag in
 dev | development)
   devMenu
   ;;
