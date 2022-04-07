@@ -37,6 +37,7 @@ function multiselect {
   local return_value=$1
   eval my_options="$2"
   eval preselection="$3"
+  local isMultiSelect=$4
 
   IFS=',' read -r -a options <<<"$my_options"
   IFS=',' read -r -a defaults <<<"$preselection"
@@ -75,6 +76,15 @@ function multiselect {
 
   toggle_option() {
     local option=$1
+
+    if [[ $isMultiSelect == "true" ]]; then
+      for ((i = 0; i < ${#selected[@]}; i++)); do
+        if [[ ${selected[i]} == "true" ]]; then
+          selected[i]="false"
+        fi
+      done
+    fi
+
     if [[ ${selected[option]} == true ]]; then
       selected[option]=false
     else
@@ -227,7 +237,7 @@ function prodPruneDocker {
 function prodMenu {
   my_options=("Build webserver,Run webserver,Install Certificate,Stop webserver,Prune docker")
   preselection=("false,false,false,false")
-  multiselect result "\${my_options}" "\${preselection}"
+  multiselect result "\${my_options}" "\${preselection}" true
 
   for ((i = 0; i < ${#result[@]}; i++)); do
     if [[ ${result[i]} = "true" ]]; then
@@ -252,9 +262,9 @@ function prodMenu {
   done
 }
 function chooseEnv {
-  my_options=("Development,Production")
+  my_options=("Development Webserver,Production Webserver")
   preselection=("false,false")
-  multiselect result "\${my_options}" "\${preselection}"
+  multiselect result "\${my_options}" "\${preselection}" "true"
 
   for ((i = 0; i < ${#result[@]}; i++)); do
     if [[ ${result[i]} = "true" ]]; then
