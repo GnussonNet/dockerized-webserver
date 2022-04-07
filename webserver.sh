@@ -3,10 +3,18 @@
 # Flags
 e_flag=''
 v_flag=''
-while getopts 'e:v:' flag; do
+d_flag=''
+f_flag=''
+c_flag=''
+p_flag=''
+while getopts 'e:v:f:c:d:p:' flag; do
   case "${flag}" in
   e) e_flag="${OPTARG}" ;;
   v) v_flag="${OPTARG}" ;;
+  d) d_flag="${OPTARG}" ;;
+  f) f_flag="${OPTARG}" ;;
+  c) c_flag="${OPTARG}" ;;
+  p) p_flag="${OPTARG}" ;;
   esac
 done
 
@@ -160,36 +168,102 @@ function devBuildWebserver {
 }
 function devRunWebserver {
   printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
-  if [ $( docker ps -a -f name=webserver | wc -l ) -lt 2 ]; then
-    if [[ -d $v_flag || -f $v_flag ]]; then
-      docker run -it --rm -d -p 8080:80 --name webserver --mount type=bind,source=$v_flag,target=/var/www/icebear.se webserver
-    elif [[ $v_flag == '' ]]; then
-      while true; do
-        printf "$(tput setaf 3)Enter path to frontend\n$(tput setaf 4)Leave blank for CWD ($(pwd)/frontend/)? $(tput sgr0)"
-        read path
-        printf "\n"
-        case $path in
-        "")
-          docker run -it --rm -d -p 8080:80 --name webserver --mount type=bind,source="$(pwd)"/frontend/,target=/var/www/icebear.se webserver
-          break
-          ;;
-        *)
-          if [[ -d $path || -f $path ]]; then
-            docker run -it --rm -d -p 8080:80 --name webserver --mount type=bind,source=$path/frontend/,target=/var/www/icebear.se webserver
-            break
-          else
-            printf "$(tput bold)$(tput setaf 1)Please provide a valid path to the frontend folder$(tput sgr0)\n\n"
-          fi
-          ;;
-        esac
-      done
-    else
-      printf "$(tput bold)$(tput setaf 1)Please provide a valid path to the frontend folder$(tput sgr0)\n\n"
-      exit 1
-    fi
-  else
+
+  # If v_flag is set, use the path specified by the user
+  local frontendPath=$f_flag
+  local configPath=$c_flag
+  local domain=$d_flag
+  local port=$p_flag
+
+  # Display error message if webserver is already running
+  if [ $(docker ps -a -f name=webserver | wc -l) -gt 1 ]; then
     echo "$(tput bold)$(tput setaf 1)Webserver already running$(tput sgr0)"
+    return 1
   fi
+
+  while true; do
+    # If domain is not set, ask the user for the path
+    if [ -z "$domain" ]; then
+      read -e -p "$(tput setaf 4)What is your domain: $(tput sgr0)" domain
+      printf "\n"
+    fi
+
+    # If frontendPath is not set, ask the user for the path
+    if [ -z "$frontendPath" ]; then
+      echo "$(tput setaf 3)Enter the path to the frontend"
+      read -e -p "$(tput setaf 4)Leave blank for CWD ($( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/frontend/): $(tput sgr0)" frontendPath
+      printf "\n"
+    fi
+
+    # If configPath is not set, ask the user for the path
+    if [ -z "$configPath" ]; then
+      echo "$(tput setaf 3)Enter the path to the config"
+      read -e -p "$(tput setaf 4)Leave blank for CWD ($( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/nginx/webserver.conf): $(tput sgr0)" configPath
+      printf "\n"
+    fi
+
+    # If port is not set, ask the user for the path
+    if [ -z "$port" ]; then
+      echo "$(tput setaf 3)What port should the webserver listen on?"
+      read -e -p "$(tput setaf 4)Leave blank for port 8080: $(tput sgr0)" port
+      printf "\n"
+    fi
+
+
+    # Check agian if frontendPath is not set, if so set it to the CWD
+    if [ -z "$frontendPath" ]; then
+      frontendPath=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"/frontend/"
+    fi
+
+    # Check agian if configPath is not set, if so set it to the CWD
+    if [ -z "$configPath" ]; then
+      configPath=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"/nginx/webserver.conf"
+    fi
+
+    # Check agian if port is not set, if so set it to the default
+    if [ -z "$port" ]; then
+      port=8080
+    fi
+
+
+    # If domain is not a file, ask the user for the path again
+    if [ -z "$domain" ]; then
+      printf "$(tput bold)$(tput setaf 1)$domain is not a valid domain$(tput sgr0)\n\n"
+      unset domain
+      continue
+    fi
+
+    # If frontendPath is not a directory, ask the user for the path again
+    if [ ! -d "$frontendPath" ]; then
+      printf "$(tput bold)$(tput setaf 1)$frontendPath is not a directory$(tput sgr0)\n\n"
+      unset frontendPath
+      continue
+    fi
+
+    # If configPath is not a file, ask the user for the path again
+    if [ ! -f "$configPath" ]; then
+      printf "$(tput bold)$(tput setaf 1)$configPath is not a file$(tput sgr0)\n\n"
+      unset configPath
+      continue
+    fi
+
+    # If port is not a file, ask the user for the path again
+    if ! [[ $port =~ ^[0-9]+$ && $port -lt 10000  ]]; then
+      printf "$(tput bold)$(tput setaf 1)$port is not a valid port$(tput sgr0)\n\n"
+      unset port
+      continue
+    fi
+
+    # If domain is valid, frontendPath is a directory, configPath is a file and port is valid, break the loop
+    break
+  done
+
+  # If frontendPath is a directory, start the webserver
+  docker run -it --rm -d -p ${port}:80 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} webserver
+}
+function devReloadWebserver {
+  printf "$(tput setaf 2)\n\nReloading Webserver...$(tput sgr0)\n\n"
+  docker kill -s HUP webserver
 }
 function devStopWebserver {
   printf "$(tput setaf 2)\n\nStopping Webserver...$(tput sgr0)\n\n"
@@ -200,8 +274,8 @@ function devPruneDocker {
   docker system prune -a -f
 }
 function devMenu {
-  my_options=("Build webserver,Run webserver,Stop webserver,Prune docker")
-  preselection=("false,false,false")
+  my_options=("Build webserver,Run webserver,Reload webserver,Stop webserver,Prune docker")
+  preselection=("false,false,false,false")
   multiselect result "\${my_options}" "\${preselection}"
 
   for ((i = 0; i < ${#result[@]}; i++)); do
@@ -214,9 +288,12 @@ function devMenu {
         devRunWebserver
         ;;
       2)
-        devStopWebserver
+        devReloadWebserver
         ;;
       3)
+        devStopWebserver
+        ;;
+      4)
         devPruneDocker
         ;;
       esac
@@ -233,19 +310,128 @@ function prodBuildWebserver {
 }
 function prodRunWebserver {
   printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
-  if [[ -d $v_flag || -f $v_flag ]]; then
-    docker run -it --rm -d -p 80:80 -p 443:443 --name webserver --mount type=bind,source=$v_flag,target=/var/www/icebear.se webserver
-  elif [[ $v_flag == '' ]]; then
-    docker run -it --rm -d -p 80:80 -p 443:443 --name webserver --mount type=bind,source="$(pwd)"/frontend/,target=/var/www/icebear.se webserver
-  else
-    printf "$(tput bold)$(tput setaf 1)Please provide a valid path to the frontend folder$(tput sgr0)\n"
-    printf "\n"
-    exit 1
+
+  # If v_flag is set, use the path specified by the user
+  local frontendPath=$f_flag
+  local configPath=$c_flag
+  local domain=$d_flag
+  local port=$p_flag
+
+  # Display error message if webserver is already running
+  if [ $(docker ps -a -f name=webserver | wc -l) -gt 1 ]; then
+    echo "$(tput bold)$(tput setaf 1)Webserver already running$(tput sgr0)"
+    return 1
   fi
+
+  while true; do
+    # If domain is not set, ask the user for the path
+    if [ -z "$domain" ]; then
+      read -e -p "$(tput setaf 4)What is your domain: $(tput sgr0)" domain
+      printf "\n"
+    fi
+
+    # If frontendPath is not set, ask the user for the path
+    if [ -z "$frontendPath" ]; then
+      echo "$(tput setaf 3)Enter the path to the frontend"
+      read -e -p "$(tput setaf 4)Leave blank for CWD ($( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/frontend/): $(tput sgr0)" frontendPath
+      printf "\n"
+    fi
+
+    # If configPath is not set, ask the user for the path
+    if [ -z "$configPath" ]; then
+      echo "$(tput setaf 3)Enter the path to the config"
+      read -e -p "$(tput setaf 4)Leave blank for CWD ($( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/nginx/webserver.conf): $(tput sgr0)" configPath
+      printf "\n"
+    fi
+
+    # If port is not set, ask the user for the path
+    if [ -z "$port" ]; then
+      echo "$(tput setaf 3)What port should the webserver listen on?"
+      read -e -p "$(tput setaf 4)Leave blank for port 8080: $(tput sgr0)" port
+      printf "\n"
+    fi
+
+
+    # Check agian if frontendPath is not set, if so set it to the CWD
+    if [ -z "$frontendPath" ]; then
+      frontendPath=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"/frontend/"
+    fi
+
+    # Check agian if configPath is not set, if so set it to the CWD
+    if [ -z "$configPath" ]; then
+      configPath=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"/nginx/webserver.conf"
+    fi
+
+    # Check agian if port is not set, if so set it to the default
+    if [ -z "$port" ]; then
+      port=8080
+    fi
+
+
+    # If domain is not a file, ask the user for the path again
+    if [ -z "$domain" ]; then
+      printf "$(tput bold)$(tput setaf 1)$domain is not a valid domain$(tput sgr0)\n\n"
+      unset domain
+      continue
+    fi
+
+    # If frontendPath is not a directory, ask the user for the path again
+    if [ ! -d "$frontendPath" ]; then
+      printf "$(tput bold)$(tput setaf 1)$frontendPath is not a directory$(tput sgr0)\n\n"
+      unset frontendPath
+      continue
+    fi
+
+    # If configPath is not a file, ask the user for the path again
+    if [ ! -f "$configPath" ]; then
+      printf "$(tput bold)$(tput setaf 1)$configPath is not a file$(tput sgr0)\n\n"
+      unset configPath
+      continue
+    fi
+
+    # If port is not a file, ask the user for the path again
+    if ! [[ $port =~ ^[0-9]+$ && $port -lt 10000  ]]; then
+      printf "$(tput bold)$(tput setaf 1)$port is not a valid port$(tput sgr0)\n\n"
+      unset port
+      continue
+    fi
+
+    # If domain is valid, frontendPath is a directory, configPath is a file and port is valid, break the loop
+    break
+  done
+
+  # If domain is valid, frontendPath is a directory, configPath is a file and port is valid, break the loop
+  docker run -it --rm -d -p ${port}:80 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} webserver
 }
 function prodInstallCert {
   printf "$(tput setaf 2)\n\nInstalling Certificate...$(tput sgr0)\n\n"
-  docker exec -ti webserver certbot --nginx --email admin@gnusson.net --agree-tos --no-eff-email --redirect -d icebear.se
+
+  local domain=$d_flag
+
+  while true; do
+    # If domain is not set, ask the user for the path
+    if [ -z "$domain" ]; then
+      read -e -p "$(tput setaf 4)What is your domain: $(tput sgr0)" domain
+      printf "\n"
+    fi
+
+    # If domain is not a file, ask the user for the path again
+    if [ -z "$domain" ]; then
+      printf "$(tput bold)$(tput setaf 1)$domain is not a valid domain$(tput sgr0)\n\n"
+      unset domain
+      continue
+    fi
+
+    #If domain is valid, break the loop
+    break
+  done
+
+  # If domain is valid, break the loop
+  docker exec -ti webserver certbot --nginx --email admin@gnusson.net --agree-tos --no-eff-email --redirect -d ${domain}
+}
+function prodReloadWebserver {
+  printf "$(tput setaf 2)\n\nReloading Webserver...$(tput sgr0)\n\n"
+  docker kill -s HUP webserver
 }
 function prodStopWebserver {
   printf "$(tput setaf 2)\n\nStopping Webserver...$(tput sgr0)\n\n"
@@ -256,9 +442,9 @@ function prodPruneDocker {
   docker system prune -a -f
 }
 function prodMenu {
-  my_options=("Build webserver,Run webserver,Install Certificate,Stop webserver,Prune docker")
-  preselection=("false,false,false,false")
-  multiselect result "\${my_options}" "\${preselection}" true
+  my_options=("Build webserver,Run webserver,Install Certificate,Reload webserver,Stop webserver,Prune docker")
+  preselection=("false,false,false,false,false")
+  multiselect result "\${my_options}" "\${preselection}"
 
   for ((i = 0; i < ${#result[@]}; i++)); do
     if [[ ${result[i]} = "true" ]]; then
@@ -273,9 +459,12 @@ function prodMenu {
         prodInstallCert
         ;;
       3)
-        prodStopWebserver
+        prodReloadWebserver
         ;;
       4)
+        prodStopWebserver
+        ;;
+      5)
         prodPruneDocker
         ;;
       esac
@@ -285,7 +474,7 @@ function prodMenu {
 function chooseEnv {
   my_options=("Development Webserver,Production Webserver")
   preselection=("false,false")
-  multiselect result "\${my_options}" "\${preselection}" "true"
+  multiselect result "\${my_options}" "\${preselection}" true
 
   for ((i = 0; i < ${#result[@]}; i++)); do
     if [[ ${result[i]} = "true" ]]; then
