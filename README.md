@@ -1,28 +1,9 @@
-![contributors](https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge)]
-![forks](https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge)]
-![stars](https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge)]
-![issues](https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge)]
-![license](https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge)]
-![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)]
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-[contributors-shield]: https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge
-[contributors-url]: https://github.com/GnussonNet/dockerized-webserver/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge
-[forks-url]: https://github.com/GnussonNet/dockerized-webserver/network/members
-[stars-shield]: https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge
-[stars-url]: https://github.com/GnussonNet/dockerized-webserver/stargazers
-[issues-shield]: https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge
-[issues-url]: https://github.com/GnussonNet/dockerized-webserver/issues
-[license-shield]: https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge
-[license-url]: https://github.com/GnussonNet/dockerized-webserver/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/GnussonNet
+![contributors](https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/graphs/contributors)
+![forks](https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/network/members)
+![stars](https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/stargazers)
+![issues](https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/issues)
+![license](https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/blob/master/LICENSE.txt)
+![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)](https://linkedin.com/in/GnussonNet)
 
 <br />
 <div align="center">
