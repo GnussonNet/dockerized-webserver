@@ -2,7 +2,7 @@
 [![forks](https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/network/members)
 [![stars](https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/stargazers)
 [![issues](https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/issues)
-[![license](https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/blob/master/LICENSE.txt)
+[![license](https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/blob/main/LICENSE)
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)](https://linkedin.com/in/GnussonNet)
 
 <br />
@@ -106,7 +106,7 @@ Don't forget to give the project a star! Thanks again!
 
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
