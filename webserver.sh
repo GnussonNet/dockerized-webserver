@@ -306,10 +306,6 @@ function devMenu {
 ##############
 # Production #
 ##############
-function prodBuildWebserver {
-  printf "$(tput setaf 2)\n\nBuilding Webserver...$(tput sgr0)\n\n"
-  docker build -t webserver . 0>/dev/null
-}
 function prodRunWebserver {
   printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
 
@@ -383,7 +379,7 @@ function prodRunWebserver {
   done
 
   # If domain is valid, frontendPath is a directory, configPath is a file, break the loop
-  docker run -it --rm -d -p 80:80 -p 443:443 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} webserver
+  docker run -it --rm -d -p 80:80 -p 443:443 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} ghcr.io/gnussonnet/dockerized-webserver:latest
 }
 function prodInstallCert {
   printf "$(tput setaf 2)\n\nInstalling Certificate...$(tput sgr0)\n\n"
@@ -439,29 +435,26 @@ function prodPruneDocker {
   docker system prune -a -f
 }
 function prodMenu {
-  my_options=("Build webserver,Run webserver,Install Certificate,Reload webserver,Stop webserver,Prune docker")
-  preselection=("false,false,false,false,false")
+  my_options=("Run webserver,Install Certificate,Reload webserver,Stop webserver,Prune docker")
+  preselection=("false,false,false,false")
   multiselect result "\${my_options}" "\${preselection}"
 
   for ((i = 0; i < ${#result[@]}; i++)); do
     if [[ ${result[i]} = "true" ]]; then
       case ${i} in
       0)
-        prodBuildWebserver
-        ;;
-      1)
         prodRunWebserver
         ;;
-      2)
+      1)
         prodInstallCert
         ;;
-      3)
+      2)
         prodReloadWebserver
         ;;
-      4)
+      3)
         prodStopWebserver
         ;;
-      5)
+      4)
         prodPruneDocker
         ;;
       esac
