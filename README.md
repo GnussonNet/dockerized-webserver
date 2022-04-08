@@ -88,11 +88,6 @@ As mentioned above, USE AT YOUR OWN RISK.
    ```sh
    sudo curl -o /usr/local/bin/webserver -L https://github.com/GnussonNet/dockerized-webserver/releases/download/1.0.0-alpha/webserver && sudo chmod +x /usr/local/bin/webserver
    ```
-
-2. Make the script executable
-   ```sh
-   chmod +x webserver
-   ```
    
 ### Uninstall
 For now simply remove the file form /usr/local/bin with `rm` (DO AT YOUR OWN RISK)
@@ -110,7 +105,7 @@ This script is farley straight forward to use
 ### Setup Webserver
 1. Run the script
    ```sh
-   ./webserver
+   webserver [OPTIONS] [ARGUMENTS]
    ```
 
    Then follow the instructions on the screen
