@@ -92,12 +92,25 @@ As mentioned above, USE AT YOUR OWN RISK.
 ## Usage
 This script is farley straight forward to use
 
+### Setup Webserver
 1. Run the script
    ```sh
    ./webserver.sh
    ```
 
    Then follow the instructions on the screen
+
+### Webserver command-line options
+Option | Description  | Values | Default
+---|---|---|---
+-m | `dev/developer` `prod/production` | Skips first question regarding dev/prod menu | null
+-v | null | null| null
+-d | `domain.com` | Your domain is passed to Certbot and NGINX | null
+-f | `PATH to frontend directory` | Path to your frontend directory | null
+-c | `PATH to nginx config file` | Path to your nginx config file | null
+-p | `0-9999` | Port to expose host (only development) | `8080`
+-e | `name@domain.com` | Email to register certificate (passed directly to Certbot) | null
+
 
 <br />
 
