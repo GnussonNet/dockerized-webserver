@@ -7,7 +7,7 @@ f_flag=''
 c_flag=''
 p_flag=''
 e_flag=''
-while getopts 'm:v:f:c:d:p:e:' flag; do
+while getopts 'm:f:c:d:p:e:' flag; do
   case "${flag}" in
   m) m_flag="${OPTARG}" ;;
   d) d_flag="${OPTARG}" ;;
