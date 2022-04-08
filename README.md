@@ -28,7 +28,6 @@
 <br />
 
 ## Table of Contents
-
 <ol>
   <li>
     <a href="#about-the-project">About The Project</a>
@@ -51,13 +50,14 @@
 </ol>
   
 <br />
-## About the Project
 
+## About the Project
 <img title="Product Screenshot" alt="Product screenshot" src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/preview.png">
 
 Via a simple menu you can easily create and renew a webserver with  SSL certificates for free using [Let's Encrypts](https://letsencrypt.org/) client, called [Certbot](https://github.com/certbot/certbot). This docker image is modified from [Jonas Alfredssons](https://github.com/JonasAlfredsson) repository [docker-nginx-certbot](https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine) and is "built on top of the official [official Nginx Docker images](https://github.com/nginxinc/docker-nginx)", alpine version. The script uses a modified arrow key menu by miu in a thread on stackexchange.com called [Arrow key/Enter menu](https://unix.stackexchange.com/a/673436).
 
 <br />
+
 ## Built With
 * [Docker](https://www.docker.com/)
 * [NGINX](https://nginx.org/)
@@ -68,6 +68,7 @@ Via a simple menu you can easily create and renew a webserver with  SSL certific
 This project is still in alpha which means it have not been tested on other machines, USE AT YOUR OWN RISK.
 
 <br />
+
 ### Perquisites
 Your system must have these following packages installed:
 
@@ -75,6 +76,7 @@ Your system must have these following packages installed:
 * [Bash (scripts)](https://www.gnu.org/software/bash/)
 
 <br />
+
 ### Installation
 As mentioned above, USE AT YOUR OWN RISK.
 
@@ -89,6 +91,7 @@ As mentioned above, USE AT YOUR OWN RISK.
    ```
 
 <br />
+
 ## Usage
 This script is farley straight forward to use
 
@@ -100,6 +103,7 @@ This script is farley straight forward to use
    Then follow the instructions on the screen
 
 <br />
+
 ## Contributing
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -113,16 +117,19 @@ Don't forget to give the project a star! Thanks again!
 5. Open a Pull Request
 
 <br />
+
 ## License
 Distributed under the MIT License. See `LICENSE` for more information.
 
 <br />
+
 ## Contact
 Filip "Gnusson" Magnusson - [@GnussonNet](https://twitter.com/GnussonNet) - admin@gnusson.net
 
 Project Link: [Github.com/GnussonNet/dockerized-webserver](https://github.com/GnussonNet/dockerized-webserver)
 
 <br />
+
 ## Acknowledgments
 Special thanks to the below users who gave me a great start when creating this project.
 
