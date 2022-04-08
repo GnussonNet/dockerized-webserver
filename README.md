@@ -1,9 +1,9 @@
-![contributors](https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge)
-![forks](https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge)
-![stars](https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge)
-![issues](https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge)
-![license](https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge)
-![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)
+![contributors](https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge)]
+![forks](https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge)]
+![stars](https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge)]
+![issues](https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge)]
+![license](https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge)]
+![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)]
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
