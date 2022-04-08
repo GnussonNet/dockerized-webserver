@@ -40,6 +40,7 @@
     <ul>
       <li><a href="#prerequisites">Prerequisites</a></li>
       <li><a href="#installation">Installation</a></li>
+      <li><a href="#uninstall">Uninstall</a></li>
     </ul>
   </li>
   <li>
@@ -91,6 +92,14 @@ As mentioned above, USE AT YOUR OWN RISK.
 2. Make the script executable
    ```sh
    chmod +x webserver
+   ```
+   
+### Uninstall
+For now simply remove the file form /usr/local/bin with `rm` (DO AT YOUR OWN RISK)
+
+1. Clone this repo and cd into directory
+   ```sh
+   sudo rm -rf /usr/local/bin/webserver
    ```
 
 <br />
