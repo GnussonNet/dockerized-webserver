@@ -1,4 +1,4 @@
-https://img.shields.io/github/issues/GnussonNet/dockerized-webserver
+<img src="https://img.shields.io/github/issues/GnussonNet/dockerized-webserver" alt="issues">
 
 <br />
 <div align="center">
