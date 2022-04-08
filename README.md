@@ -68,15 +68,11 @@ Via a simple menu you can easily create and renew a webserver with  SSL certific
 ## Getting Started
 This project is still in alpha which means it have not been tested on other machines, USE AT YOUR OWN RISK.
 
-<br />
-
 ### Perquisites
 Your system must have these following packages installed:
 
 * [Docker](https://www.docker.com/)
 * [Bash (scripts)](https://www.gnu.org/software/bash/)
-
-<br />
 
 ### Installation
 As mentioned above, USE AT YOUR OWN RISK.
