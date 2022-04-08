@@ -1,9 +1,9 @@
-![contributors](https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/graphs/contributors)
-![forks](https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/network/members)
-![stars](https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/stargazers)
-![issues](https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/issues)
-![license](https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/blob/master/LICENSE.txt)
-![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)](https://linkedin.com/in/GnussonNet)
+[![contributors](https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/graphs/contributors)
+[![forks](https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/network/members)
+[![stars](https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/stargazers)
+[![issues](https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/issues)
+[![license](https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/blob/master/LICENSE.txt)
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)](https://linkedin.com/in/GnussonNet)
 
 <br />
 <div align="center">
