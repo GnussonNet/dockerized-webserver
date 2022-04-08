@@ -111,4 +111,5 @@ Project Link: [Github.com/GnussonNet/dockerized-webserver](https://github.com/Gn
 Special thanks to the below users who gave me a great start when creating this project.
 
 * [Jonas Alfredssons](https://github.com/JonasAlfredsson) repository [docker-nginx-certbot](https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine)
-* Mius [Arrow key/Enter menu](https://unix.stackexchange.com/a/673436)
+* Mius arrow menu [Arrow key/Enter menu](https://unix.stackexchange.com/a/673436)
+* [othneildrews](https://github.com/othneildrew) readme template [Best README Template](https://github.com/othneildrew/Best-README-Template)
