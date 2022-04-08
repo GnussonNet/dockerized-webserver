@@ -90,7 +90,7 @@ As mentioned above, USE AT YOUR OWN RISK.
 
 2. Make the script executable
    ```sh
-   chmod 700 webserver.sh
+   chmod +x webserver
    ```
 
 <br />
@@ -101,7 +101,7 @@ This script is farley straight forward to use
 ### Setup Webserver
 1. Run the script
    ```sh
-   ./webserver.sh
+   ./webserver
    ```
 
    Then follow the instructions on the screen
