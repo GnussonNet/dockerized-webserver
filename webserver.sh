@@ -2,7 +2,6 @@
 
 # Flags
 m_flag=''
-v_flag=''
 d_flag=''
 f_flag=''
 c_flag=''
@@ -11,7 +10,6 @@ e_flag=''
 while getopts 'm:v:f:c:d:p:e:' flag; do
   case "${flag}" in
   m) m_flag="${OPTARG}" ;;
-  v) v_flag="${OPTARG}" ;;
   d) d_flag="${OPTARG}" ;;
   f) f_flag="${OPTARG}" ;;
   c) c_flag="${OPTARG}" ;;
@@ -171,7 +169,7 @@ function devBuildWebserver {
 function devRunWebserver {
   printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
 
-  # If v_flag is set, use the path specified by the user
+  # If flags is set, use it
   local frontendPath=$f_flag
   local configPath=$c_flag
   local domain=$d_flag
@@ -309,7 +307,7 @@ function devMenu {
 function prodRunWebserver {
   printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
 
-  # If v_flag is set, use the path specified by the user
+  # If flags is set, use it
   local frontendPath=$f_flag
   local configPath=$c_flag
   local domain=$d_flag
