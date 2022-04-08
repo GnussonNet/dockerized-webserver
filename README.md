@@ -1,6 +1,24 @@
 # dockerized-webserver
 
-This dockerized webserver is loaded with NGINX and Let's Encrypt certificate to establish a secure and stable website
+<br />
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+  <img src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/logo.svg" alt="logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">Dockerized Webserver with SSL</h3>
+
+  <p align="center">
+    This dockerized webserver is loaded with NGINX and<br /> Let's Encrypt certificate to establish a secure and stable website
+    <br />
+    <a href="https://github.com/GnussonNet/dockerized-webserver#about-the-project"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=bug_report.md">Report Bug</a>
+    ·
+    <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=feature_request.md">Request Feature</a>
+  </p>
+</div>
 
 ## Table of Contents
 
