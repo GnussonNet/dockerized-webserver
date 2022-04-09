@@ -4,7 +4,7 @@
   <img src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/logo.svg" alt="logo" width="150" height="150">
   </a>
 
-  <h1 align="center">Dockerized Webserver with SSL</h1>
+  <h1 align="center">🔥 Dockerized Webserver with SSL 🔥</h1>
 
   <p align="center">
 		<a href="https://github.com/GnussonNet/dockerized-webserver/graphs/contributors"><img alt="Downloads per month" src="https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge"/></a>
@@ -21,11 +21,11 @@
      using <a href="https://letsencrypt.org/">Let's Encrypts</a> client, called <a href="https://github.com/certbot/certbot">Certbot</a>. This docker image is modified from <a href="https://github.com/JonasAlfredsson">Jonas Alfredssons</a> repository <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine">docker-nginx-certbot</a> and is "built on top of the <a href="https://github.com/nginxinc/docker-nginx">official Nginx Docker images</a>", alpine version. The script uses a modified arrow key menu by miu in a thread on stackexchange.com called <a href="https://unix.stackexchange.com/a/673436">Arrow key/Enter menu</a>.
     <br />
     <br />
-    <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=bug_report.md">Report Bug</a>
+    <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=bug_report.md">🕵🏽 Report Bug</a>
     -
-    <a href="#contact">Contact</a>
+    <a href="#contact">✍🏼 Contact</a>
     -
-    <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=feature_request.md">Request Feature</a>
+    <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=feature_request.md">🙇 Request Feature</a>
   </p>
 </div>
 
