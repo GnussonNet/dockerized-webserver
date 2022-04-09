@@ -22,7 +22,9 @@
     <br />
     <br />
     <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=bug_report.md">Report Bug</a>
-    ·
+    -
+    <a href="#contact">Contact</a>
+    -
     <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=feature_request.md">Request Feature</a>
   </p>
 </div>
@@ -44,7 +46,7 @@
   <li>
     <a href="#getting-started">Getting Started</a>
     <ul>
-      <li><a href="#prerequisites">Prerequisites</a></li>
+      <li><a href="#perquisites">Perquisites</a></li>
       <li><a href="#installation">Installation</a></li>
       <li><a href="#uninstall">Uninstall</a></li>
     </ul>
