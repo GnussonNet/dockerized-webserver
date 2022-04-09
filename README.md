@@ -16,9 +16,9 @@
 	</p>
 
   <p align="center">
-    This dockerized webserver is loaded with NGINX and<br /> Let's Encrypt certificate to establish a secure and stable website
-    <br />
-    <a href="https://github.com/GnussonNet/dockerized-webserver#about-the-project"><strong>Explore the docs »</strong></a>
+	  <strong>Via a simple menu you can easily create and renew a webserver with  SSL certificates for free</strong>
+	  <br />
+     using <a href="https://letsencrypt.org/">Let's Encrypts</a> client, called <a href="https://github.com/certbot/certbot">Certbot</a>. This docker image is modified from <a href="https://github.com/JonasAlfredsson">Jonas Alfredssons</a> repository <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine">docker-nginx-certbot</a> and is "built on top of the <a href="https://github.com/nginxinc/docker-nginx">official Nginx Docker images</a>", alpine version. The script uses a modified arrow key menu by miu in a thread on stackexchange.com called <a href="https://unix.stackexchange.com/a/673436">Arrow key/Enter menu</a>.
     <br />
     <br />
     <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=bug_report.md">Report Bug</a>
@@ -29,10 +29,14 @@
 
 <br />
 
+<img title="Product Screenshot" alt="Product screenshot" src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/preview.png">
+
+<br />
+
 ## Table of Contents
 <ol>
   <li>
-    <a href="#about-the-project">About The Project</a>
+    <a href="#dockerized-webserver-with-ssl">About The Project</a>
     <ul>
       <li><a href="#built-with">Built With</a></li>
     </ul>
@@ -57,13 +61,6 @@
   <li><a href="#contact">Contact</a></li>
   <li><a href="#acknowledgments">Acknowledgments</a></li>
 </ol>
-  
-<br />
-
-## About the Project
-<img title="Product Screenshot" alt="Product screenshot" src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/preview.png">
-
-Via a simple menu you can easily create and renew a webserver with  SSL certificates for free using [Let's Encrypts](https://letsencrypt.org/) client, called [Certbot](https://github.com/certbot/certbot). This docker image is modified from [Jonas Alfredssons](https://github.com/JonasAlfredsson) repository [docker-nginx-certbot](https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine) and is "built on top of the official [official Nginx Docker images](https://github.com/nginxinc/docker-nginx)", alpine version. The script uses a modified arrow key menu by miu in a thread on stackexchange.com called [Arrow key/Enter menu](https://unix.stackexchange.com/a/673436).
 
 <br />
 
