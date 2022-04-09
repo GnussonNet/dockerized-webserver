@@ -1,7 +1,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/GnussonNet/dockerized-webserver">
-  <img src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/logo.svg" alt="logo" width="150" height="150">
+  <img src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/logo.svg" alt="logo" width="200" height="200">
   </a>
 
   <h1 align="center">🔥 Dockerized Webserver with SSL 🔥</h1>
