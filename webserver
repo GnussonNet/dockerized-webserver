@@ -162,10 +162,6 @@ function multiselect {
 ###############
 # Development #
 ###############
-function devBuildWebserver {
-  printf "$(tput setaf 2)\n\nBuilding Webserver...$(tput sgr0)\n\n"
-  docker build -t webserver . 0>/dev/null
-}
 function devRunWebserver {
   printf "$(tput setaf 2)\n\nStating Webserver...$(tput sgr0)\n\n"
 
@@ -191,14 +187,14 @@ function devRunWebserver {
     # If frontendPath is not set, ask the user for the path
     if [ -z "$frontendPath" ]; then
       echo "$(tput setaf 3)Enter the path to the frontend"
-      read -e -p "$(tput setaf 4)Leave blank for CWD ($( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/frontend/): $(tput sgr0)" frontendPath
+      read -e -p "$(tput setaf 4)Leave blank for default ($HOME/webserver/frontend/): $(tput sgr0)" frontendPath
       printf "\n"
     fi
 
     # If configPath is not set, ask the user for the path
     if [ -z "$configPath" ]; then
       echo "$(tput setaf 3)Enter the path to the config"
-      read -e -p "$(tput setaf 4)Leave blank for CWD ($( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/nginx/webserver.conf): $(tput sgr0)" configPath
+      read -e -p "$(tput setaf 4)Leave blank for default ($HOME/webserver/webserver.conf): $(tput sgr0)" configPath
       printf "\n"
     fi
 
@@ -210,12 +206,12 @@ function devRunWebserver {
     fi
 
 
-    # Check agian if frontendPath is not set, if so set it to the CWD
+    # Check agian if frontendPath is not set, if so set it to the default
     if [ -z "$frontendPath" ]; then
       frontendPath=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"/frontend/"
     fi
 
-    # Check agian if configPath is not set, if so set it to the CWD
+    # Check agian if configPath is not set, if so set it to the default
     if [ -z "$configPath" ]; then
       configPath=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"/nginx/webserver.conf"
     fi
@@ -259,7 +255,7 @@ function devRunWebserver {
   done
 
   # If frontendPath is a directory, start the webserver
-  docker run -it --rm -d -p ${port}:80 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} webserver
+  docker run -it --rm -d -p ${port}:80 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} ghcr.io/gnussonnet/dockerized-webserver:latest
 }
 function devReloadWebserver {
   printf "$(tput setaf 2)\n\nReloading Webserver...$(tput sgr0)\n\n"
@@ -274,26 +270,23 @@ function devPruneDocker {
   docker system prune -a -f
 }
 function devMenu {
-  my_options=("Build webserver,Run webserver,Reload webserver,Stop webserver,Prune docker")
-  preselection=("false,false,false,false")
+  my_options=("Run webserver,Reload webserver,Stop webserver,Prune docker")
+  preselection=("false,false,false")
   multiselect result "\${my_options}" "\${preselection}"
 
   for ((i = 0; i < ${#result[@]}; i++)); do
     if [[ ${result[i]} = "true" ]]; then
       case ${i} in
       0)
-        devBuildWebserver
-        ;;
-      1)
         devRunWebserver
         ;;
-      2)
+      1)
         devReloadWebserver
         ;;
-      3)
+      2)
         devStopWebserver
         ;;
-      4)
+      3)
         devPruneDocker
         ;;
       esac
@@ -328,26 +321,26 @@ function prodRunWebserver {
     # If frontendPath is not set, ask the user for the path
     if [ -z "$frontendPath" ]; then
       echo "$(tput setaf 3)Enter the path to the frontend"
-      read -e -p "$(tput setaf 4)Leave blank for CWD ($( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/frontend/): $(tput sgr0)" frontendPath
+      read -e -p "$(tput setaf 4)Leave blank for default ($HOME/webserver/frontend/): $(tput sgr0)" frontendPath
       printf "\n"
     fi
 
     # If configPath is not set, ask the user for the path
     if [ -z "$configPath" ]; then
       echo "$(tput setaf 3)Enter the path to the config"
-      read -e -p "$(tput setaf 4)Leave blank for CWD ($( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/nginx/webserver.conf): $(tput sgr0)" configPath
+      read -e -p "$(tput setaf 4)Leave blank for default ($HOME/webserver/webserver.conf): $(tput sgr0)" configPath
       printf "\n"
     fi
 
 
-    # Check agian if frontendPath is not set, if so set it to the CWD
+    # Check agian if frontendPath is not set, if so set it to the default
     if [ -z "$frontendPath" ]; then
-      frontendPath=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"/frontend/"
+      frontendPath="$HOME/webserver/frontend/"
     fi
 
-    # Check agian if configPath is not set, if so set it to the CWD
+    # Check agian if configPath is not set, if so set it to the default
     if [ -z "$configPath" ]; then
-      configPath=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"/nginx/webserver.conf"
+      configPath="$HOME/webserver/webserver.conf"
     fi
 
 
@@ -417,8 +410,8 @@ function prodInstallCert {
     break
   done
 
-  # If domain is valid and email is valid, break the loop
-  docker exec -ti webserver certbot --nginx --email ${email} --agree-tos --no-eff-email --redirect -d ${domain}
+  # If domain is valid and email is valid, break the loop (--agree-tos --no-eff-email)
+  docker exec -ti webserver certbot --nginx --email ${email} --redirect -d ${domain}
 }
 function prodReloadWebserver {
   printf "$(tput setaf 2)\n\nReloading Webserver...$(tput sgr0)\n\n"
