@@ -40,4 +40,4 @@ RUN set -ex && \
   rm -f /etc/nginx/conf.d/* && \
   rm -f /etc/nginx/nginx.conf
 
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
