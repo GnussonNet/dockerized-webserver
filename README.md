@@ -1,17 +1,19 @@
-[![contributors](https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/graphs/contributors)
-[![forks](https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/network/members)
-[![stars](https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/stargazers)
-[![issues](https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/issues)
-[![license](https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/blob/main/LICENSE)
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)](https://linkedin.com/in/gnussonnet)
-  
 <br />
 <div align="center">
   <a href="https://github.com/GnussonNet/dockerized-webserver">
   <img src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/logo.svg" alt="logo" width="150" height="150">
   </a>
 
-  <h3 align="center">Dockerized Webserver with SSL</h3>
+  <h1 align="center">Dockerized Webserver with SSL</h1>
+
+  <p align="center">
+		<a href="https://github.com/GnussonNet/dockerized-webserver/graphs/contributors"><img alt="Downloads per month" src="https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge"/></a>
+<a href="https://github.com/GnussonNet/dockerized-webserver/network/members"><img alt="NPM Version" src="https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge"/></a>
+<a href="https://github.com/GnussonNet/dockerized-webserver/stargazers"><img alt="Dependencies" src="https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge"></a>
+<a href="https://github.com/GnussonNet/dockerized-webserver/issues"><img alt="Contributors" src="https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge"/></a>
+<a href="https://github.com/GnussonNet/dockerized-webserver/blob/main/LICENSE"><img alt="Custom badge" src="https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge"/></a>
+<a href="https://linkedin.com/in/gnussonnet"><img alt="Maintained" src="https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555"/></a>
+	</p>
 
   <p align="center">
     This dockerized webserver is loaded with NGINX and<br /> Let's Encrypt certificate to establish a secure and stable website
