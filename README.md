@@ -1,36 +1,44 @@
-[![contributors](https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/graphs/contributors)
-[![forks](https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/network/members)
-[![stars](https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/stargazers)
-[![issues](https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/issues)
-[![license](https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge)](https://github.com/GnussonNet/dockerized-webserver/blob/main/LICENSE)
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)](https://linkedin.com/in/gnussonnet)
-  
 <br />
 <div align="center">
   <a href="https://github.com/GnussonNet/dockerized-webserver">
-  <img src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/logo.svg" alt="logo" width="150" height="150">
+  <img src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/logo.svg" alt="logo" width="200" height="200">
   </a>
 
-  <h3 align="center">Dockerized Webserver with SSL</h3>
+  <h1 align="center">🔥 Dockerized Webserver with SSL 🔥</h1>
 
   <p align="center">
-    This dockerized webserver is loaded with NGINX and<br /> Let's Encrypt certificate to establish a secure and stable website
+		<a href="https://github.com/GnussonNet/dockerized-webserver/graphs/contributors"><img alt="Downloads per month" src="https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge"/></a>
+<a href="https://github.com/GnussonNet/dockerized-webserver/network/members"><img alt="NPM Version" src="https://img.shields.io/github/forks/GnussonNet/dockerized-webserver.svg?style=for-the-badge"/></a>
+<a href="https://github.com/GnussonNet/dockerized-webserver/stargazers"><img alt="Dependencies" src="https://img.shields.io/github/stars/GnussonNet/dockerized-webserver.svg?style=for-the-badge"></a>
+<a href="https://github.com/GnussonNet/dockerized-webserver/issues"><img alt="Contributors" src="https://img.shields.io/github/issues/GnussonNet/dockerized-webserver.svg?style=for-the-badge"/></a>
+<a href="https://github.com/GnussonNet/dockerized-webserver/blob/main/LICENSE"><img alt="Custom badge" src="https://img.shields.io/github/license/GnussonNet/dockerized-webserver.svg?style=for-the-badge"/></a>
+<a href="https://linkedin.com/in/gnussonnet"><img alt="Maintained" src="https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555"/></a>
+	</p>
+
+  <p align="center">
+	  <strong>Via a simple menu you can easily create and renew a webserver with  SSL certificates for free</strong>
+	  <br />
+     using <a href="https://letsencrypt.org/">Let's Encrypts</a> client, called <a href="https://github.com/certbot/certbot">Certbot</a>. This docker image is modified from <a href="https://github.com/JonasAlfredsson">Jonas Alfredssons</a> repository <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine">docker-nginx-certbot</a> and is "built on top of the <a href="https://github.com/nginxinc/docker-nginx">official Nginx Docker images</a>", alpine version. The script uses a modified arrow key menu by miu in a thread on stackexchange.com called <a href="https://unix.stackexchange.com/a/673436">Arrow key/Enter menu</a>.
     <br />
-    <a href="https://github.com/GnussonNet/dockerized-webserver#about-the-project"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=bug_report.md">Report Bug</a>
-    ·
-    <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=feature_request.md">Request Feature</a>
+    <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=bug_report.md">🕵🏽 Report Bug</a>
+    -
+    <a href="#contact">✍🏼 Contact</a>
+    -
+    <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=feature_request.md">🙇 Request Feature</a>
   </p>
 </div>
+
+<br />
+
+<img title="Product Screenshot" alt="Product screenshot" src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/preview.png">
 
 <br />
 
 ## Table of Contents
 <ol>
   <li>
-    <a href="#about-the-project">About The Project</a>
+    <a href="#dockerized-webserver-with-ssl">About The Project</a>
     <ul>
       <li><a href="#built-with">Built With</a></li>
     </ul>
@@ -38,7 +46,7 @@
   <li>
     <a href="#getting-started">Getting Started</a>
     <ul>
-      <li><a href="#prerequisites">Prerequisites</a></li>
+      <li><a href="#perquisites">Perquisites</a></li>
       <li><a href="#installation">Installation</a></li>
       <li><a href="#uninstall">Uninstall</a></li>
     </ul>
@@ -55,13 +63,6 @@
   <li><a href="#contact">Contact</a></li>
   <li><a href="#acknowledgments">Acknowledgments</a></li>
 </ol>
-  
-<br />
-
-## About the Project
-<img title="Product Screenshot" alt="Product screenshot" src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/preview.png">
-
-Via a simple menu you can easily create and renew a webserver with  SSL certificates for free using [Let's Encrypts](https://letsencrypt.org/) client, called [Certbot](https://github.com/certbot/certbot). This docker image is modified from [Jonas Alfredssons](https://github.com/JonasAlfredsson) repository [docker-nginx-certbot](https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine) and is "built on top of the official [official Nginx Docker images](https://github.com/nginxinc/docker-nginx)", alpine version. The script uses a modified arrow key menu by miu in a thread on stackexchange.com called [Arrow key/Enter menu](https://unix.stackexchange.com/a/673436).
 
 <br />
 
