@@ -18,7 +18,7 @@
   <p align="center">
 	  <strong>Via a simple menu you can easily create and renew a webserver with  SSL certificates for free</strong>
 	  <br />
-     using <a href="https://letsencrypt.org/">Let's Encrypts</a> client, called <a href="https://github.com/certbot/certbot">Certbot</a>. This docker image is modified from <a href="https://github.com/JonasAlfredsson">Jonas Alfredssons</a> repository <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine">docker-nginx-certbot</a> and is "built on top of the <a href="https://github.com/nginxinc/docker-nginx">official Nginx Docker images</a>", alpine version. The script uses a modified arrow key menu by miu in a thread on stackexchange.com called <a href="https://unix.stackexchange.com/a/673436">Arrow key/Enter menu</a>.
+     Using <a href="https://letsencrypt.org/">Let's Encrypts</a> client, called <a href="https://github.com/certbot/certbot">Certbot</a> a new certificate is generated quick and easily. The docker image is modified and based on <a href="https://github.com/JonasAlfredsson">Jonas Alfredssons</a> repository <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine">docker-nginx-certbot</a> which is "built on top of the <a href="https://github.com/nginxinc/docker-nginx">official Nginx Docker images</a>", alpine version. The webserver script is modified and based on a arrow key menu by miu in a thread on <a href="https://unix.stackexchange.com">stackexchange</a> called <a href="https://unix.stackexchange.com/a/673436">Arrow key/Enter menu</a>.
     <br />
     <br />
     <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=bug_report.md">🕵🏽 Report Bug</a>
@@ -112,7 +112,7 @@ This script is farley straight forward to use
    Then follow the instructions on the screen
 
 ### Webserver command-line options
-Option | Values  | Description
+Option | Arguments  | Description
 ---|---|---
 -m | `dev/development` `prod/production` | Skips first question regarding dev/prod menu | null
 -d | `domain.com` | Your domain is passed to Certbot and NGINX | null
