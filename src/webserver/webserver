@@ -270,7 +270,7 @@ function devPruneDocker {
   docker system prune -a -f
 }
 function devMenu {
-  my_options=("Run webserver,Reload webserver,Stop webserver,Prune docker")
+  my_options=("Run Webserver,Reload Webserver,Stop Webserver,Prune Docker")
   preselection=("false,false,false")
   multiselect result "\${my_options}" "\${preselection}"
 
@@ -426,7 +426,7 @@ function prodPruneDocker {
   docker system prune -a -f
 }
 function prodMenu {
-  my_options=("Run webserver,Install Certificate,Reload webserver,Stop webserver,Prune docker")
+  my_options=("Run Webserver,Install Certificate,Reload Webserver,Stop Webserver,Prune Docker")
   preselection=("false,false,false,false")
   multiselect result "\${my_options}" "\${preselection}"
 
