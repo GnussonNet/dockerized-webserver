@@ -4,7 +4,7 @@
   <img src="https://github.com/GnussonNet/dockerized-webserver/blob/main/.github/logo.svg" alt="logo" width="200" height="200">
   </a>
 
-  <h1 align="center">🔥 Dockerized Webserver with SSL 🔥</h1>
+  <h1 align="center">🔥 Webserver with SSL Certificate🔥</h1>
 
   <p align="center">
 		<a href="https://github.com/GnussonNet/dockerized-webserver/graphs/contributors"><img alt="Downloads per month" src="https://img.shields.io/github/contributors/GnussonNet/dockerized-webserver.svg?style=for-the-badge"/></a>
@@ -16,9 +16,9 @@
 	</p>
 
   <p align="center">
-	  <strong>Via a simple menu you can easily create and renew a webserver with  SSL certificates for free</strong>
+	  <strong>Via a simple menu you can easily create and renew a webserver with SSL certificates for free</strong>
 	  <br />
-     Using <a href="https://letsencrypt.org/">Let's Encrypts</a> client, called <a href="https://github.com/certbot/certbot">Certbot</a> a new certificate is generated quick and easily. The docker image is modified and based on <a href="https://github.com/JonasAlfredsson">Jonas Alfredssons</a> repository <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine">docker-nginx-certbot</a> which is "built on top of the <a href="https://github.com/nginxinc/docker-nginx">official Nginx Docker images</a>", alpine version. The webserver script is modified and based on a arrow key menu by miu in a thread on <a href="https://unix.stackexchange.com">stackexchange</a> called <a href="https://unix.stackexchange.com/a/673436">Arrow key/Enter menu</a>.
+     Using <a href="https://letsencrypt.org/">Let's Encrypts</a> client called <a href="https://github.com/certbot/certbot">Certbot</a>, a new certificate is generated quick and easily. The docker image is modified and based on <a href="https://github.com/JonasAlfredsson">Jonas Alfredssons</a> repository <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/src/Dockerfile-alpine">docker-nginx-certbot</a> which is "built on top of the <a href="https://github.com/nginxinc/docker-nginx">official Nginx Docker images</a>", alpine version. The webserver script is modified and based on a arrow key menu by miu in a thread on <a href="https://unix.stackexchange.com">stackexchange</a> called <a href="https://unix.stackexchange.com/a/673436">Arrow key/Enter menu</a>.
     <br />
     <br />
     <a href="https://github.com/GnussonNet/dockerized-webserver/issues/new?assignees=&labels=&template=bug_report.md">🕵🏽 Report Bug</a>
@@ -87,7 +87,7 @@ As mentioned above, USE AT YOUR OWN RISK.
 
 1. Clone this repo and cd into directory
    ```sh
-   sudo curl -o /usr/local/bin/webserver -L https://github.com/GnussonNet/dockerized-webserver/releases/download/1.0.1-alpha/webserver && sudo chmod +x /usr/local/bin/webserver
+   sudo curl -o /usr/local/bin/webserver -L https://github.com/GnussonNet/webserver/releases/download/1.0.0-alpha/webserver && sudo chmod +x /usr/local/bin/webserver
    ```
    
 ### Uninstall
