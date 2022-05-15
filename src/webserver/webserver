@@ -255,7 +255,7 @@ function devRunWebserver {
   done
 
   # If frontendPath is a directory, start the webserver
-  docker run -it --rm -d -p ${port}:80 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} ghcr.io/gnussonnet/dockerized-webserver:latest
+  docker run -it --rm -d -p ${port}:80 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} ghcr.io/gnussonnet/webserver:latest
 }
 function devReloadWebserver {
   printf "$(tput setaf 2)\n\nReloading Webserver...$(tput sgr0)\n\n"
@@ -370,7 +370,7 @@ function prodRunWebserver {
   done
 
   # If domain is valid, frontendPath is a directory, configPath is a file, break the loop
-  docker run -it --rm -d -p 80:80 -p 443:443 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} ghcr.io/gnussonnet/dockerized-webserver:latest
+  docker run -it --rm -d -p 80:80 -p 443:443 --name webserver -v ${frontendPath}:/var/www/${domain} -v ${configPath}:/etc/nginx/sites-enabled/${domain} ghcr.io/gnussonnet/webserver:latest
 }
 function prodInstallCert {
   printf "$(tput setaf 2)\n\nInstalling Certificate...$(tput sgr0)\n\n"
