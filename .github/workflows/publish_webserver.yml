@@ -1,6 +1,9 @@
 name: Publish webserver Docker image
 
-on: [push]
+on:
+  push:
+    tags:
+      - '*.*.*'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,4 +23,6 @@ jobs:
     - name: Build the webserver Docker image
       run: |
         docker build ./src/nginx/ --tag ghcr.io/gnussonnet/webserver:latest
+        docker tag ghcr.io/gnussonnet/webserver:latest ghcr.io/gnussonnet/webserver:${{ github.ref }}
         docker push ghcr.io/gnussonnet/webserver:latest
+        docker push ghcr.io/gnussonnet/webserver:${{ github.ref }}
