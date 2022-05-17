@@ -20,5 +20,4 @@ jobs:
     - name: Build the webserver Docker image
       run: |
         docker build ./src/nginx/ --tag ghcr.io/gnussonnet/webserver:latest
-        docker run ghcr.io/gnussonnet/webserver:latest
         docker push ghcr.io/gnussonnet/webserver:latest
