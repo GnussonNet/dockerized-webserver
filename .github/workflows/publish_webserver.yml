@@ -24,12 +24,13 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       
-    - uses: "marvinpinto/action-automatic-releases@latest"
+    - uses: ncipollo/release-action@v1
       with:
-        repo_token: "${{ secrets.ACCESS_TOKEN }}"
         prerelease: true
-        files: |
-          ./src/webserver/webserver
+        artifacts: "./src/webserver/webserver"
+        tag: ${{ steps.get_version.outputs.VERSION }}
+        bodyFile: "CHANGELOG.md"
+        token: ${{ secrets.ACCESS_TOKEN }}
 
     - name: Build the webserver Docker image
       run: |
