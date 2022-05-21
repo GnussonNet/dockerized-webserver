@@ -1,8 +1,11 @@
-name: Test
+name: Publish webserver Docker image
+
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    paths:
+      - './src/nginx/Dockerfile'
+      - './src/nginx/nginx.conf'
+      - './src/webserver/webserver'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -31,5 +34,19 @@ jobs:
       id: get_tag_commit_it
       run: echo ::set-output name=TAG_COMMIT_IT::$(echo "${{ steps.get_version.outputs.VERSION }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
       
-    - name: Echo
-      run: echo ${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_IT }}
+    - name: Create specific version release
+      uses: ncipollo/release-action@v1
+      with:
+        prerelease: false
+        artifacts: "./src/webserver/webserver"
+        tag: ${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_IT }}
+        bodyFile: "CHANGELOG.md"
+        token: ${{ secrets.ACCESS_TOKEN }}
+
+    - name: Build the webserver Docker image
+      run: |
+        docker build ./src/nginx/ --tag webserver
+        docker tag webserver:latest ghcr.io/gnussonnet/webserver:${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_IT }}
+        docker tag webserver:latest ghcr.io/gnussonnet/webserver:latest
+        docker push ghcr.io/gnussonnet/webserver:${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_IT }}
+        docker push ghcr.io/gnussonnet/webserver:latest
