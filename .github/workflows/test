@@ -1,0 +1,42 @@
+name: Publish webserver Docker image
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  publish-webserver-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.ACCESS_TOKEN }}
+
+    - name: Get the version of pushed tag
+      id: get_version
+      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      
+    - name: Create specific version release
+      uses: ncipollo/release-action@v1
+      with:
+        prerelease: true
+        artifacts: "./src/webserver/webserver"
+        tag: ${{ steps.get_version.outputs.VERSION }}
+        bodyFile: "CHANGELOG.md"
+        token: ${{ secrets.ACCESS_TOKEN }}
+
+    - name: Build the webserver Docker image
+      run: |
+        docker build ./src/nginx/ --tag webserver
+        docker tag webserver:latest ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}
+        docker tag webserver:latest ghcr.io/gnussonnet/webserver:latest
+        docker push ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}
+        docker push ghcr.io/gnussonnet/webserver:latest
