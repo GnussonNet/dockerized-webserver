@@ -24,11 +24,21 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       
-    - uses: ncipollo/release-action@v1
+    - name: Create specific version release
+      uses: ncipollo/release-action@v1
       with:
         prerelease: true
         artifacts: "./src/webserver/webserver"
         tag: ${{ steps.get_version.outputs.VERSION }}
+        bodyFile: "CHANGELOG.md"
+        token: ${{ secrets.ACCESS_TOKEN }}
+        
+    - name: Create "latest" version release
+      uses: ncipollo/release-action@v1
+      with:
+        prerelease: true
+        artifacts: "./src/webserver/webserver"
+        tag: "latest"
         bodyFile: "CHANGELOG.md"
         token: ${{ secrets.ACCESS_TOKEN }}
 
