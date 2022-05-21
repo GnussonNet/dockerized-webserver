@@ -22,6 +22,6 @@ jobs:
 
     - name: "Set VERSION from created tag"
       env:
-        VERSION: $({ GITHUB_REF##*/ }}
+        VERSION: ${{ GITHUB_REF##*/ }}
       run: |
         echo "Version of created tag is: ${VERSION}"
