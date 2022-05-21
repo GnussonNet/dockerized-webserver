@@ -32,16 +32,6 @@ jobs:
         tag: ${{ steps.get_version.outputs.VERSION }}
         bodyFile: "CHANGELOG.md"
         token: ${{ secrets.ACCESS_TOKEN }}
-        
-    - name: Create "latest" version release
-      uses: ncipollo/release-action@v1
-      with:
-        allowUpdates: true
-        prerelease: true
-        artifacts: "./src/webserver/webserver"
-        tag: "latest"
-        bodyFile: "CHANGELOG.md"
-        token: ${{ secrets.ACCESS_TOKEN }}
 
     - name: Build the webserver Docker image
       run: |
