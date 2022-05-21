@@ -24,19 +24,23 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       
+    - name: Get the head commit id
+      id: get_commit_id
+      run: echo ::set-output name=COMMIT_ID::$(echo ${{github.sha}} | head -c 7)
+      
     - name: Create specific version release
       uses: ncipollo/release-action@v1
       with:
         prerelease: false
         artifacts: "./src/webserver/webserver"
-        tag: ${{ steps.get_version.outputs.VERSION }}
+        tag: "${{ steps.get_version.outputs.VERSION }}-${{ steps.get_commit_it.outputs.COMMIT_ID }}"
         bodyFile: "CHANGELOG.md"
         token: ${{ secrets.ACCESS_TOKEN }}
 
     - name: Build the webserver Docker image
       run: |
         docker build ./src/nginx/ --tag webserver
-        docker tag webserver:latest ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}
+        docker tag webserver:latest ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}-${{ steps.get_commit_it.outputs.COMMIT_ID }}
         docker tag webserver:latest ghcr.io/gnussonnet/webserver:latest
-        docker push ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}
+        docker push ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}-${{ steps.get_commit_it.outputs.COMMIT_ID }}
         docker push ghcr.io/gnussonnet/webserver:latest
