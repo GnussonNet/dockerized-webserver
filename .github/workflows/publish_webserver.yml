@@ -36,6 +36,7 @@ jobs:
     - name: Create "latest" version release
       uses: ncipollo/release-action@v1
       with:
+        allowUpdates: true
         prerelease: true
         artifacts: "./src/webserver/webserver"
         tag: "latest"
