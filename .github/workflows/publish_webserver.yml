@@ -27,7 +27,7 @@ jobs:
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.ACCESS_TOKEN }}"
-        prerelease: contains(steps.get_version.outputs.VERSION, 'alpha')
+        prerelease: true
         files: |
           ./src/webserver/webserver
 
