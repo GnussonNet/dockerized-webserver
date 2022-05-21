@@ -24,6 +24,19 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       
-    - name: Echo version tag
+    - name: Create specific version release
+      uses: ncipollo/release-action@v1
+      with:
+        prerelease: false
+        artifacts: "./src/webserver/webserver"
+        tag: ${{ steps.get_version.outputs.VERSION }}
+        bodyFile: "CHANGELOG.md"
+        token: ${{ secrets.ACCESS_TOKEN }}
+
+    - name: Build the webserver Docker image
       run: |
-        echo ${{ github.sha }}
+        docker build ./src/nginx/ --tag webserver
+        docker tag webserver:latest ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}
+        docker tag webserver:latest ghcr.io/gnussonnet/webserver:latest
+        docker push ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}
+        docker push ghcr.io/gnussonnet/webserver:latest
