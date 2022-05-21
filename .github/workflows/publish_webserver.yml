@@ -23,6 +23,18 @@ jobs:
     - name: Get the version of pushed tag
       id: get_version
       run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      
+    - name: release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: false
+        prerelease: contains(steps.get_version.outputs.VERSION, 'alpha')
+        release_name: ${{ steps.get_version.outputs.VERSION }}
+        tag_name: ${{ github.ref }}
+        body_path: CHANGELOG.md
+      env:
+        GITHUB_TOKEN: ${{ github.ACCESS_TOKEN }}
 
     - name: Build the webserver Docker image
       run: |
