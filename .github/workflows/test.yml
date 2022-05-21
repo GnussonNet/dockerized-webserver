@@ -27,5 +27,9 @@ jobs:
       id: get_commit_id
       run: echo ::set-output name=COMMIT_ID::$(echo ${{github.sha}} | head -c 7)
       
+    - name: Combine tag and commit id
+      id: get_tag_commit_it
+      run: echo ::set-output name=TAG_COMMIT_IT::$(echo "${{ steps.get_version.outputs.VERSION }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
+      
     - name: Echo
-      run: echo "Version; ${{ steps.get_version.outputs.VERSION }}${{ steps.get_commit_id.outputs.COMMIT_ID }}"
+      run: echo ${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_IT }}
