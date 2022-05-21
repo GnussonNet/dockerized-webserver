@@ -87,7 +87,7 @@ As mentioned above, USE AT YOUR OWN RISK.
 
 1. Clone this repo and cd into directory
    ```sh
-   sudo curl -o /usr/local/bin/webserver -L https://github.com/GnussonNet/webserver/releases/download/1.0.0-alpha/webserver && sudo chmod +x /usr/local/bin/webserver
+   sudo curl -o /usr/local/bin/webserver -L https://github.com/GnussonNet/webserver/releases/download/latest/webserver && sudo chmod +x /usr/local/bin/webserver
    ```
    
 ### Uninstall
