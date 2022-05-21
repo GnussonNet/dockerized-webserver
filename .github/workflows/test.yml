@@ -19,10 +19,11 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.ACCESS_TOKEN }}
+        
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
 
-    - name: "Set VERSION from created tag"
-      env:
-        VERSION: ${{ github.ref }}
+    - name: "Echo version"
       run: |
-        echo "Version of created tag is: ${VERSION}"
-        echo "Version of created tag is: ${{ github.ref }}"
+        echo "Version of created tag is: ${{ steps.get_version.outputs.VERSION }}"
