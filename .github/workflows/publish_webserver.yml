@@ -1,4 +1,4 @@
-name: Test
+name: Publish docker image to ghcr
 
 on:
   push:
@@ -20,11 +20,11 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.ACCESS_TOKEN }}
         
-    - name: Get the version
+    - name: Get the version of pushed tag
       id: get_version
       run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
 
-    - name: Build the webserver Docker image
+    - name: Build the webserver Docker image with tag
       run: |
         docker build ./src/nginx/ --tag ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}
         docker push ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}
