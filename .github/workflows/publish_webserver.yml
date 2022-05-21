@@ -1,13 +1,13 @@
-name: Publish webserver Docker image
+name: Test
 
 on:
-  create:
+  push:
     tags:
       - 'v*.*.*'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  publish-webserver-image:
+  test:
     runs-on: ubuntu-22.04
 
     steps:
@@ -19,9 +19,12 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.ACCESS_TOKEN }}
+        
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
 
-    - name: "Set VERSION from created tag"
-      env:
-        VERSION: $({ GITHUB_REF##*/ }}
+    - name: Build the webserver Docker image
       run: |
-        echo "Version of created tag is: ${VERSION}"
+        docker build ./src/nginx/ --tag ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}
+        docker push ghcr.io/gnussonnet/webserver:${{ steps.get_version.outputs.VERSION }}
