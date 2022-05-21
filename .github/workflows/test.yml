@@ -1,0 +1,27 @@
+name: Test
+
+on:
+  create:
+    tags:
+      - 'v*.*.*'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.ACCESS_TOKEN }}
+
+    - name: "Set VERSION from created tag"
+      env:
+        VERSION: $({ GITHUB_REF##*/ }}
+      run: |
+        echo "Version of created tag is: ${VERSION}"
