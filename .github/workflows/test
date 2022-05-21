@@ -1,0 +1,23 @@
+name: Publish webserver Docker image
+
+on: [push]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  publish-webserver-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.ACCESS_TOKEN }}
+
+    - name: Build the webserver Docker image
+      run: |
+        docker build ./src/nginx/ --tag ghcr.io/gnussonnet/webserver:latest
+        docker push ghcr.io/gnussonnet/webserver:latest
