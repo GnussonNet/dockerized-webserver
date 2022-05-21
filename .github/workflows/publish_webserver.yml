@@ -20,7 +20,8 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.ACCESS_TOKEN }}
 
-    - name: Build the webserver Docker image
+    - name: "Set VERSION from created tag"
+      env:
+        VERSION: $({ GITHUB_REF##*/ }}
       run: |
-        docker build ./src/nginx/ --tag ghcr.io/gnussonnet/webserver:${GITHUB_REF##*/}
-        docker push ghcr.io/gnussonnet/webserver:${GITHUB_REF##*/}
+        echo "Version of created tag is: ${VERSION}"
