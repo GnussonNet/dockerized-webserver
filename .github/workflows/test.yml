@@ -23,18 +23,10 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.ACCESS_TOKEN }}
-
-    - name: Get the version of pushed tag
-      id: get_version
-      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       
     - name: Get the head commit id
       id: get_commit_id
       run: echo ::set-output name=COMMIT_ID::$(echo ${{github.sha}} | head -c 7)
-      
-    - name: Combine tag and commit id
-      id: get_tag_commit_it
-      run: echo ::set-output name=TAG_COMMIT_IT::$(echo "${{ steps.get_version.outputs.VERSION }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
       
     - name: 'Get Previous tag'
       id: previoustag
@@ -49,7 +41,15 @@ jobs:
         separator: '-'
         maxsplit: 1
         
-    - name: test
-      run: echo "${{ steps.split.outputs._0 }}"    
+    - name: 'Get next minor version'
+      id: semvers
+      uses: "WyriHaximus/github-action-next-semvers@v1"
+      with:
+        version: ${{ steps.split.outputs._0 }}
+
+        
+    - name: Combine tag and commit id
+      id: get_tag_commit_it
+      run: echo ::set-output name=TAG_COMMIT_IT::$(echo "${{ steps.semvers.outputs.patch }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
 
       
