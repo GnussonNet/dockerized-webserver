@@ -2,6 +2,15 @@ name: Publish webserver Docker image
 
 on:
   push:
+    branches:
+      - main
+    paths:
+      - './src/nginx/Dockerfile'
+      - './src/nginx/nginx.conf'
+      - './src/webserver/webserver'
+  pull_request:
+    branches:
+      - main
     paths:
       - './src/nginx/Dockerfile'
       - './src/nginx/nginx.conf'
