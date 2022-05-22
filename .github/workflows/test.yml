@@ -49,17 +49,16 @@ jobs:
         maxsplit: 1
         
       # Get the first half and split and increment version
-    #- name: Increment minor version of previous tag
-    #  id: semvers
-    #  uses: "WyriHaximus/github-action-next-semvers@v1"
-    #  with:
-    #    version: ${{ steps.split.outputs._0 }}
+    - name: Increment minor version of previous tag
+      id: semvers
+      uses: "WyriHaximus/github-action-next-semvers@v1"
+      with:
+        version: ${{ steps.split.outputs._0 }}
 
       # Combine incremented tag and head commit ID
     - name: Combine new version with head commit ID
       id: get_tag_commit_it
-      run: echo ::set-output name=TAG_COMMIT_ID::$(echo "${{ steps.split.outputs._0 }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
-      #run: echo ::set-output name=TAG_COMMIT_ID::$(echo "${{ steps.semvers.outputs.patch }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
+      run: echo ::set-output name=TAG_COMMIT_ID::$(echo "v${{ steps.semvers.outputs.patch }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
 
       # Create release
     - name: Create webserver release
