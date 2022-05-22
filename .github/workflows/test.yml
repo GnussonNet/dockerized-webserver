@@ -46,6 +46,8 @@ jobs:
       id: split
       with:
         msg: ${{ steps.previoustag.outputs.tag }}
+        separator: '-'
+        maxsplit: 1
         
     - name: test
       run: echo "${{ steps.split.outputs._0 }}"    
