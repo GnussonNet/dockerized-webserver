@@ -6,13 +6,13 @@ on:
       - main
     paths:
       - './src/nginx/**'
-      - './src/webserver/webserver'
+      - './src/webserver/**'
   pull_request:
     branches:
       - main
     paths:
       - './src/nginx/**'
-      - './src/webserver/webserver'
+      - './src/webserver/**'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -45,7 +45,7 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         prerelease: false
-        artifacts: "./src/webserver/webserver"
+        artifacts: "./src/webserver/**"
         tag: ${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_IT }}
         bodyFile: "CHANGELOG.md"
         token: ${{ secrets.ACCESS_TOKEN }}
