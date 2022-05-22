@@ -74,7 +74,8 @@
 <br />
 
 ## Getting Started
-This project is still in alpha which means it have not been tested on other machines, USE AT YOUR OWN RISK.
+### Disclaimer
+This project is still under development which means it have not been tested on other machines, USE AT YOUR OWN RISK.
 
 ### Perquisites
 Your system must have these following packages installed:
