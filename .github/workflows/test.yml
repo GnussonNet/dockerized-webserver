@@ -5,15 +5,13 @@ on:
     branches:
       - main
     paths:
-      - './src/nginx/Dockerfile'
-      - './src/nginx/nginx.conf'
+      - './src/nginx/**'
       - './src/webserver/webserver'
   pull_request:
     branches:
       - main
     paths:
-      - './src/nginx/Dockerfile'
-      - './src/nginx/nginx.conf'
+      - './src/nginx/**'
       - './src/webserver/webserver'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
