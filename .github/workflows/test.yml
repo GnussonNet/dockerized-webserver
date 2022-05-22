@@ -49,11 +49,11 @@ jobs:
         maxsplit: 1
         
       # Get the first half and split and increment version
-    - name: Increment minor version of previous tag
-      id: semvers
-      uses: "WyriHaximus/github-action-next-semvers@v1"
-      with:
-        version: ${{ steps.split.outputs._0 }}
+    #- name: Increment minor version of previous tag
+    #  id: semvers
+    #  uses: "WyriHaximus/github-action-next-semvers@v1"
+    #  with:
+    #    version: ${{ steps.split.outputs._0 }}
 
       # Combine incremented tag and head commit ID
     - name: Combine new version with head commit ID
