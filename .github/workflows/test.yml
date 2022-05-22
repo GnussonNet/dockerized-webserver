@@ -35,7 +35,7 @@ jobs:
       run: echo ::set-output name=TAG_COMMIT_IT::$(echo "${{ steps.get_version.outputs.VERSION }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
       
     - name: Get previous stable releases
-      uses: ankur-lt/get-previous-stable-releases@latest
+      uses: ankur-lt/get-previous-stable-releases@v1.0.4
       id: previousstableversions
       with:
         user: ${{ github.actor }}
