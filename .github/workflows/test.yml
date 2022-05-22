@@ -14,6 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # Required due to the way Git works, without it this action won't be able to find any or the correct tags
 
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v1
@@ -34,11 +36,12 @@ jobs:
       id: get_tag_commit_it
       run: echo ::set-output name=TAG_COMMIT_IT::$(echo "${{ steps.get_version.outputs.VERSION }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
       
-    - name: Get previous stable releases
-      uses: ankur-lt/get-previous-stable-releases@v1.0.4
-      id: previousstableversions
+    - name: 'Get Previous tag'
+      id: previoustag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
       with:
-        user: ${{ github.actor }}
-        repoName: ${{ github.event.repository.name }}
-        accessToken: ${{ secrets.ACCESS_TOKEN }}
+        fallback: v1.0.0 # Optional fallback tag to use when no tag can be found
+
+      
+
       
