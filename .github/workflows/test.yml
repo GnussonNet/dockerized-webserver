@@ -1,13 +1,15 @@
 name: Publish webserver Docker image
 
 on:
+  # Run workflow when files inside src/ changes
   push:
     branches: [ main ]
     paths: 
        - 'src/**'
+       
+  # Run workflow manually inside Actions
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   publish-webserver-image:
     runs-on: ubuntu-latest
@@ -17,6 +19,7 @@ jobs:
       with:
         fetch-depth: 0 # Required due to the way Git works, without it this action won't be able to find any or the correct tags
 
+      # Sign in to Github
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v1
       with:
@@ -24,32 +27,54 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.ACCESS_TOKEN }}
       
-    - name: Get the head commit id
+      # Get head commit ID (SHA)
+    - name: Get head commit ID
       id: get_commit_id
       run: echo ::set-output name=COMMIT_ID::$(echo ${{github.sha}} | head -c 7)
       
-    - name: 'Get Previous tag'
+      # Get previous tag
+    - name: Get previous tag
       id: previoustag
       uses: "WyriHaximus/github-action-get-previous-tag@v1"
       with:
         fallback: v1.0.0 # Optional fallback tag to use when no tag can be found
         
-    - uses: jungwinter/split@v2
+      # Split the previous tag at '-'
+    - name: Split previous tag at '-'
+      uses: jungwinter/split@v2
       id: split
       with:
         msg: ${{ steps.previoustag.outputs.tag }}
         separator: '-'
         maxsplit: 1
         
-    - name: 'Get next minor version'
+      # Get the first half and split and increment version
+    - name: Increment minor version of previous tag
       id: semvers
       uses: "WyriHaximus/github-action-next-semvers@v1"
       with:
         version: ${{ steps.split.outputs._0 }}
 
-        
-    - name: Combine tag and commit id
+      # Combine incremented tag and head commit ID
+    - name: Combine new version with head commit ID
       id: get_tag_commit_it
-      run: echo ::set-output name=TAG_COMMIT_IT::$(echo "${{ steps.semvers.outputs.patch }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
+      run: echo ::set-output name=TAG_COMMIT_ID::$(echo "${{ steps.semvers.outputs.patch }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
 
-      
+      # Create release
+    - name: Create webserver release
+      uses: ncipollo/release-action@v1
+      with:
+        prerelease: false
+        artifacts: "./src/webserver/**"
+        tag: ${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_ID }}
+        bodyFile: "CHANGELOG.md"
+        token: ${{ secrets.ACCESS_TOKEN }}
+
+      # Build Webserver Docker image
+    - name: Build and deploy Webserver Docker image
+      run: |
+        docker build ./src/nginx/ --tag webserver
+        docker tag webserver:latest ghcr.io/gnussonnet/webserver:${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_ID }}
+        docker tag webserver:latest ghcr.io/gnussonnet/webserver:latest
+        docker push ghcr.io/gnussonnet/webserver:${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_ID }}
+        docker push ghcr.io/gnussonnet/webserver:latest
