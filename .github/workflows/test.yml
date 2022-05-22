@@ -58,7 +58,8 @@ jobs:
       # Combine incremented tag and head commit ID
     - name: Combine new version with head commit ID
       id: get_tag_commit_it
-      run: echo ::set-output name=TAG_COMMIT_ID::$(echo "${{ steps.semvers.outputs.patch }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
+      run: echo ::set-output name=TAG_COMMIT_ID::$(echo "${{ steps.split.outputs._0 }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
+      #run: echo ::set-output name=TAG_COMMIT_ID::$(echo "${{ steps.semvers.outputs.patch }}-${{ steps.get_commit_id.outputs.COMMIT_ID }}")
 
       # Create release
     - name: Create webserver release
