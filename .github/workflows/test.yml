@@ -73,7 +73,7 @@ jobs:
       # Build Webserver Docker image
     - name: Build and deploy Webserver Docker image
       run: |
-        docker build ./src/nginx/ --tag webserver
+        docker build --platform linux/amd64 ./src/nginx/ --tag webserver
         docker tag webserver:latest ghcr.io/gnussonnet/webserver:${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_ID }}
         docker tag webserver:latest ghcr.io/gnussonnet/webserver:latest
         docker push ghcr.io/gnussonnet/webserver:${{ steps.get_tag_commit_it.outputs.TAG_COMMIT_ID }}
